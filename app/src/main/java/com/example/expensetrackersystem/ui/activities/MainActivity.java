@@ -3,6 +3,7 @@ package com.example.expensetrackersystem.ui.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,7 +14,7 @@ import android.widget.ImageView;
 
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.ui.fragments.AboutFragment;
-import com.example.expensetrackersystem.ui.fragments.ExpensesFragment;
+import com.example.expensetrackersystem.ui.fragments.Expenses.ExpensesFragment;
 import com.example.expensetrackersystem.ui.fragments.HomeFragment;
 import com.example.expensetrackersystem.ui.fragments.SettingsFragment;
 import com.example.expensetrackersystem.ui.fragments.StarredFragment;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawer(navigationView);
 
         navigationIcon.setOnClickListener(view->{
-
+        drawerLayout.openDrawer(GravityCompat.START);
         });
 
     }
