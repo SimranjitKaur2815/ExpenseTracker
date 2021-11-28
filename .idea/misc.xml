@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/drawable/border.xml" value="0.2203125" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/drawable/ic_drawer.xml" value="0.2203125" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/about_fragment_layout.xml" value="0.1" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/activity_custom_splash_screen.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/expenses_adapter.xml" value="0.22" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/expenses_fragment_layout.xml" value="0.1" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/home_fragment_layout.xml" value="0.1" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/settings_fragment_layout.xml" value="0.1" />
