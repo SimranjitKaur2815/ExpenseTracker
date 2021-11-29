@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Here you go"
+                    android:text="$2344"
                     android:id="@+id/calculated_amount"
                     android:textSize="22sp"
                     android:textStyle="bold"
@@ -47,9 +47,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tata"
+                    android:text="24,Jan"
                     android:id="@+id/date"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#515151"
                     />

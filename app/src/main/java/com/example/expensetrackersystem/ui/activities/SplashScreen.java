@@ -9,8 +9,9 @@ import android.os.Handler;
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.ui.activities.MainActivity;
 
+
 public class SplashScreen extends AppCompatActivity {
-    private final int SPLASH_DISPLAY_LENGTH = 5000;
+    private final int SPLASH_DISPLAY_LENGTH = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

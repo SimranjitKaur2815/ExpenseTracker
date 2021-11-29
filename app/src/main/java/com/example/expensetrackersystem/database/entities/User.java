@@ -1,12 +1,12 @@
-package com.example.expensetrackersystem.database;
+package com.example.expensetrackersystem.database.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "user")
 public class User {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int user_id;
 
     @ColumnInfo(name = "first_name")

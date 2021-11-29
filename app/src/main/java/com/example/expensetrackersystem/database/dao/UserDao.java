@@ -1,9 +1,11 @@
-package com.example.expensetrackersystem.database;
+package com.example.expensetrackersystem.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+
+import com.example.expensetrackersystem.database.entities.User;
 
 import java.util.List;
 

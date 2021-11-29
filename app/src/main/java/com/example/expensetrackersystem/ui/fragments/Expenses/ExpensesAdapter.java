@@ -11,30 +11,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensetrackersystem.R;
+import com.example.expensetrackersystem.database.entities.ExpenseItems;
 
 import java.util.List;
 
 public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder> {
     public Context context;
-    private List<ExpensesModel> expensesModels;
+    private List<ExpenseItems> expensesModels;
 
-    public ExpensesAdapter(List<ExpensesModel> expensesModels){
-        this.expensesModels=expensesModels;
+    public ExpensesAdapter(List<ExpenseItems> expensesModels) {
+        this.expensesModels = expensesModels;
     }
 
 
     @NonNull
     @Override
     public ExpensesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.expenses_adapter,parent,false);
-
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.expenses_adapter, parent, false);
         return new ExpensesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ExpensesViewHolder holder, int position) {
-        ExpensesModel expensesModel=expensesModels.get(position);
 
 
     }
@@ -45,15 +43,16 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
     }
 
     public static class ExpensesViewHolder extends RecyclerView.ViewHolder {
-         ImageView edit,delete;
-         TextView calculated_amount,expense_content;
+        ImageView edit, delete;
+        TextView calculated_amount, expense_content;
+
         public ExpensesViewHolder(@NonNull View itemView) {
 
             super(itemView);
-            edit=itemView.findViewById(R.id.edit);
-            delete=itemView.findViewById(R.id.delete);
-            calculated_amount=itemView.findViewById(R.id.calculated_amount);
-            expense_content=itemView.findViewById(R.id.expense_content);
+            edit = itemView.findViewById(R.id.edit);
+            delete = itemView.findViewById(R.id.delete);
+            calculated_amount = itemView.findViewById(R.id.calculated_amount);
+            expense_content = itemView.findViewById(R.id.expense_content);
         }
     }
 }
