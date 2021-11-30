@@ -9,7 +9,7 @@ import com.example.expensetrackersystem.database.entities.ExpenseItems;
 import com.example.expensetrackersystem.database.entities.User;
 import com.example.expensetrackersystem.database.entities.ExpenseItemsWithUser;
 
-@Database(entities = {User.class, ExpenseItems.class, ExpenseItemsWithUser.class}, version = 1)
+@Database(entities = {User.class, ExpenseItems.class, ExpenseItemsWithUser.class}, version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract ExpensesDao expensesDao();

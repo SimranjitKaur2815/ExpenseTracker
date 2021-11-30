@@ -1,4 +1,4 @@
-package com.example.expensetrackersystem.ui.fragments.Expenses;
+package com.example.expensetrackersystem.ui.fragments.expenses;
 
 import android.content.Context;
 import android.os.Bundle;

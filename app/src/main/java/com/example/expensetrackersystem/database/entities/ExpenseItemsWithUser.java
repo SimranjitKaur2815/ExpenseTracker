@@ -7,36 +7,126 @@ import androidx.room.TypeConverters;
 
 import com.example.expensetrackersystem.utils.DateTypeConverter;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
 public class ExpenseItemsWithUser {
 
     @PrimaryKey
-    public int item_id;
+    private int id;
 
-    public int user_id;
+    @ColumnInfo(name = "user_id")
+    private int userId;
 
-    public String item_name, first_name, last_name;
+    @ColumnInfo(name = "item_name")
+    private String itemName;
 
-    public Double item_price;
+    @ColumnInfo(name = "first_name")
+    private String firstName;
 
-    public Boolean is_deleted = false;
+    @ColumnInfo(name = "last_name")
+    private String lastName;
 
+    @ColumnInfo(name = "item_price")
+    private Double itemPrice;
+
+    @ColumnInfo(name = "is_deleted")
+    private Boolean isDeleted = false;
+
+
+    @ColumnInfo(name = "created_timestamp")
     @TypeConverters({DateTypeConverter.class})
-    public Date created_at;
+    private Date createdTimeStamp = Calendar.getInstance().getTime();
+
+    @ColumnInfo(name = "created_date")
+    private String createdDate = DateFormat.getDateInstance().format(createdTimeStamp);
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Double getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(Double itemPrice) {
+        this.itemPrice = itemPrice;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Date getCreatedTimeStamp() {
+        return createdTimeStamp;
+    }
+
+    public void setCreatedTimeStamp(Date createdTimeStamp) {
+        this.createdTimeStamp = createdTimeStamp;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
 
     @Override
     public String toString() {
-        return "ExpenseItemsWithUser{" +
-                "item_id=" + item_id +
-                ", user_id=" + user_id +
-                ", item_name='" + item_name + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", item_price=" + item_price +
-                ", is_deleted=" + is_deleted +
-                ", created_at=" + created_at +
+        return "\n-------\nExpenseItemsWithUser{" +
+                "id=" + id +
+                "date=" + createdDate +
+                ", userId=" + userId +
+                ", itemName='" + itemName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", itemPrice=" + itemPrice +
+                ", isDeleted=" + isDeleted +
+                ", createdTimeStamp=" + createdTimeStamp +
                 '}';
     }
 }

@@ -16,7 +16,13 @@
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/starred_fragment_layout.xml" value="0.1" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/toolbar.xml" value="0.33" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/menu/navigation_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/upjot/Projects/Android/ExpenseTracker-master/ExpenseTracker-master/app/src/main/res/drawable/bottom_sheet_rounded_bg.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/upjot/Projects/Android/ExpenseTracker-master/ExpenseTracker-master/app/src/main/res/drawable/ic_add_expense.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/upjot/Projects/Android/ExpenseTracker-master/ExpenseTracker-master/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/upjot/Projects/Android/ExpenseTracker-master/ExpenseTracker-master/app/src/main/res/layout/add_expense_bottom_sheet.xml" value="0.264" />
         <entry key="..\:/Users/upjot/Projects/Android/ExpenseTracker-master/ExpenseTracker-master/app/src/main/res/layout/expenses_adapter.xml" value="0.264" />
+        <entry key="..\:/Users/upjot/Projects/Android/ExpenseTracker-master/ExpenseTracker-master/app/src/main/res/layout/expenses_item.xml" value="0.25" />
+        <entry key="..\:/Users/upjot/Projects/Android/ExpenseTracker-master/ExpenseTracker-master/app/src/main/res/layout/home_fragment_layout.xml" value="0.25" />
       </map>
     </option>
   </component>

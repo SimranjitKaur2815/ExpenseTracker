@@ -9,24 +9,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.expensetrackersystem.R;
-import com.example.expensetrackersystem.database.DatabaseClient;
-import com.example.expensetrackersystem.database.entities.ExpenseItems;
-import com.example.expensetrackersystem.database.entities.User;
-import com.example.expensetrackersystem.database.entities.ExpenseItemsWithUser;
 import com.example.expensetrackersystem.ui.fragments.AboutFragment;
-import com.example.expensetrackersystem.ui.fragments.Expenses.ExpensesFragment;
-import com.example.expensetrackersystem.ui.fragments.HomeFragment;
+import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesFragment;
+import com.example.expensetrackersystem.ui.fragments.home.HomeFragment;
 import com.example.expensetrackersystem.ui.fragments.SettingsFragment;
 import com.example.expensetrackersystem.ui.fragments.StarredFragment;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,20 +48,19 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.openDrawer(GravityCompat.START);
         });
 
-        Executor executor= Executors.newSingleThreadExecutor();
 
+   /*     Executor executor = Executors.newSingleThreadExecutor();
         User user = new User();
         user.firstName = "Simranjit";
         user.lastName = "Kaur";
         executor.execute(()->{
-           //DatabaseClient.getInstance(this).getAppDatabase().userDao().insertAll(user);
+//           DatabaseClient.getInstance(this).getAppDatabase().userDao().insertAll(user);
         });
 
         ExpenseItems expenseItems = new ExpenseItems();
-        expenseItems.item_price = 2400d;
-        expenseItems.item_name = "iPhone 13 Pro";
-        expenseItems.user_id = 1;
-//        expenseItems.created_date = Calendar.getInstance().getTime();
+        expenseItems.setItemPrice(2400d);
+        expenseItems.setItemName("iPhone 12 Pro");
+        expenseItems.setUserId(1);
 
         executor.execute(()->{
 
@@ -81,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        executor.execute(() -> {
+
+
+            for (String date : DatabaseClient.getInstance(this).getAppDatabase().expensesDao().getExpensesDates()) {
+
+                Log.e("Main Activity", "onCreate: " + date);
+            }
+
+        });*/
 
     }
 
