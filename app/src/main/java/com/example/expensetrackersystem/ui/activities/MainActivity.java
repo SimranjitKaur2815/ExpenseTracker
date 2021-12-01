@@ -14,8 +14,10 @@ import android.widget.ImageView;
 
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.ui.fragments.AboutFragment;
-import com.example.expensetrackersystem.ui.fragments.Expenses.ExpensesFragment;
-import com.example.expensetrackersystem.ui.fragments.HomeFragment;
+
+import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesFragment;
+import com.example.expensetrackersystem.ui.fragments.home.HomeFragment;
+
 import com.example.expensetrackersystem.ui.fragments.SettingsFragment;
 import com.example.expensetrackersystem.ui.fragments.StarredFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -27,16 +29,16 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     ImageView navigationIcon;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navigationView=findViewById(R.id.navigation_view);
-        actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.nav_open,R.string.nav_close);
-        navigationIcon=findViewById(R.id.navigationIcon);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_view);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
+        navigationIcon = findViewById(R.id.navigationIcon);
+
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -45,11 +47,47 @@ public class MainActivity extends AppCompatActivity {
 
         navigationDrawer(navigationView);
 
-        navigationIcon.setOnClickListener(view->{
-        drawerLayout.openDrawer(GravityCompat.START);
+
+        navigationIcon.setOnClickListener(view -> {
+            drawerLayout.openDrawer(GravityCompat.START);
         });
 
+
+   /*     Executor executor = Executors.newSingleThreadExecutor();
+        User user = new User();
+        user.firstName = "Simranjit";
+        user.lastName = "Kaur";
+        executor.execute(()->{
+//           DatabaseClient.getInstance(this).getAppDatabase().userDao().insertAll(user);
+        });
+
+        ExpenseItems expenseItems = new ExpenseItems();
+        expenseItems.setItemPrice(2400d);
+        expenseItems.setItemName("iPhone 12 Pro");
+        expenseItems.setUserId(1);
+
+        executor.execute(()->{
+
+            DatabaseClient.getInstance(this).getAppDatabase().expensesDao().insertExpense(expenseItems);
+
+            for(ExpenseItemsWithUser items:DatabaseClient.getInstance(this).getAppDatabase().expensesDao().getExpenses(1)){
+
+                Log.e("Main Activity", "onCreate: " +items.toString());
+            }
+
+        });
+        executor.execute(() -> {
+
+
+            for (String date : DatabaseClient.getInstance(this).getAppDatabase().expensesDao().getExpensesDates()) {
+
+                Log.e("Main Activity", "onCreate: " + date);
+            }
+
+        });*/
+
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -58,8 +96,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void navigationDrawer(NavigationView navigationView)
-    {
+
+
+    public void navigationDrawer(NavigationView navigationView) {
+
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
                     selectDrawerItem(menuItem);
@@ -69,24 +109,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void selectDrawerItem(MenuItem menuItem) {
 
-        Fragment fragment=null;
 
-        switch(menuItem.getItemId()){
-            case R.id.nav_home: fragment=new HomeFragment();
+        Fragment fragment = null;
+
+        switch (menuItem.getItemId()) {
+            case R.id.nav_home:
+                fragment = new HomeFragment();
 
                 break;
-            case R.id.nav_all_expenses: fragment=new ExpensesFragment();
+            case R.id.nav_all_expenses:
+                fragment = new ExpensesFragment();
 
                 break;
-            case R.id.nav_settings: fragment=new SettingsFragment();
+            case R.id.nav_settings:
+                fragment = new SettingsFragment();
                 break;
-            case R.id.nav_about: fragment=new AboutFragment();
+            case R.id.nav_about:
+                fragment = new AboutFragment();
                 break;
-            case R.id.nav_starred: fragment=new StarredFragment();
+            case R.id.nav_starred:
+                fragment = new StarredFragment();
                 break;
-            default:fragment=new HomeFragment();
-            break;
-
+            default:
+                fragment = new HomeFragment();
+                break;
 
 
         }
