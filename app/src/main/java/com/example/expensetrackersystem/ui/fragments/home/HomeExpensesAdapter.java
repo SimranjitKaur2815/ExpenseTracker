@@ -23,7 +23,7 @@ public class HomeExpensesAdapter extends RecyclerView.Adapter<HomeExpensesAdapte
 
     @Override
     public int getItemCount() {
-        return 25;
+        return 8;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

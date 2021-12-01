@@ -26,7 +26,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -60,7 +59,7 @@
 
                 <ImageView
                     android:id="@+id/edit"
-                    android:layout_width="40dp"
+                    android:layout_width="30dp"
 
                     android:layout_height="35dp"
                     android:src="@drawable/ic_all_edit" />
