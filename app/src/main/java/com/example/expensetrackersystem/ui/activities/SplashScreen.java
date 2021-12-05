@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.ui.activities.MainActivity;
+import com.example.expensetrackersystem.ui.activities.login.LoginActivity;
+import com.example.expensetrackersystem.utils.db.DbHelper;
+import com.example.expensetrackersystem.utils.db.UserDbListener;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -25,9 +29,19 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainIntent);
-                finish();
+                DbHelper.getInstance().isLoggedIn(SplashScreen.this, new UserDbListener.AuthListener() {
+                    @Override
+                    public void onSuccess() {
+                        startActivity(new Intent(SplashScreen.this,MainActivity.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        startActivity(new Intent(SplashScreen.this,LoginActivity.class));
+                        finish();
+                    }
+                });
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

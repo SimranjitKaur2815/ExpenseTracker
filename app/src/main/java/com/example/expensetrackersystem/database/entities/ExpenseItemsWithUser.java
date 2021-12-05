@@ -20,6 +20,9 @@ public class ExpenseItemsWithUser {
     @ColumnInfo(name = "user_id")
     private int userId;
 
+    @ColumnInfo(name = "avatar")
+    private String avatar;
+
     @ColumnInfo(name = "item_name")
     private String itemName;
 
@@ -28,6 +31,13 @@ public class ExpenseItemsWithUser {
 
     @ColumnInfo(name = "last_name")
     private String lastName;
+
+    @ColumnInfo(name = "age")
+    private int age;
+
+    @ColumnInfo(name = "user_created_timestamp")
+    @TypeConverters({DateTypeConverter.class})
+    private Date userCreatedTimeStamp;
 
     @ColumnInfo(name = "item_price")
     private Double itemPrice;
@@ -115,18 +125,45 @@ public class ExpenseItemsWithUser {
         this.createdDate = createdDate;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Date getUserCreatedTimeStamp() {
+        return userCreatedTimeStamp;
+    }
+
+    public void setUserCreatedTimeStamp(Date userCreatedTimeStamp) {
+        this.userCreatedTimeStamp = userCreatedTimeStamp;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
-        return "\n-------\nExpenseItemsWithUser{" +
+        return "-------\n\nExpenseItemsWithUser{" +
                 "id=" + id +
-                "date=" + createdDate +
                 ", userId=" + userId +
+                ", avatar='" + avatar + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", userCreatedTimeStamp=" + userCreatedTimeStamp +
                 ", itemPrice=" + itemPrice +
                 ", isDeleted=" + isDeleted +
                 ", createdTimeStamp=" + createdTimeStamp +
+                ", createdDate='" + createdDate + '\'' +
                 '}';
     }
 }

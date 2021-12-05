@@ -69,4 +69,14 @@
         android:textAllCaps="false"
         app:backgroundTint="@color/text_orange" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/updateExpenseMatBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="24dp"
+        android:text="Update"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/text_orange" />
+
 </LinearLayout>

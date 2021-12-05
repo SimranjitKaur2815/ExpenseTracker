@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpenseTrackerSystem">
         <activity
+            android:name=".ui.activities.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.SplashScreen"
             android:exported="true">
             <intent-filter>
@@ -18,9 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.MainActivity">
-
-        </activity>
+        <activity android:name=".ui.activities.MainActivity" />
     </application>
 
 </manifest>

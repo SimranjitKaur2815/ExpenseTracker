@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ExpensesModel {
     private List<ExpenseItems> expenseItems;
-    private Date submittedDate;
+    private String submittedDate;
 
     public List<ExpenseItems> getExpenseItems() {
         return expenseItems;
@@ -17,12 +17,19 @@ public class ExpensesModel {
         this.expenseItems = expenseItems;
     }
 
-    public Date getSubmittedDate() {
+    public String getSubmittedDate() {
         return submittedDate;
     }
 
-    public void setSubmittedDate(Date submittedDate) {
+    public void setSubmittedDate(String submittedDate) {
         this.submittedDate = submittedDate;
     }
 
+    @Override
+    public String toString() {
+        return "ExpensesModel{" +
+                "expenseItems=" + expenseItems +
+                ", submittedDate='" + submittedDate + '\'' +
+                '}';
+    }
 }
