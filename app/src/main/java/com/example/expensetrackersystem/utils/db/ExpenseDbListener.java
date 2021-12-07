@@ -24,4 +24,9 @@ public interface ExpenseDbListener {
 
         void onFailure(String msg);
     }
+    interface DeleteExpenseListener{
+        void onSuccess();
+
+        void onFailure(String msg);
+    }
 }

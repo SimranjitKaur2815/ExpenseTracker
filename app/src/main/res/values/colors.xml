@@ -10,5 +10,6 @@
     <color name="text_orange">#FF9800</color>
     <color name="text_grey">#888888</color>
     <color name="grey">#AFAFAF</color>
+    <color name="lightGrey">#DCDCDC</color>
     <color name="fab_tint">#FF5722</color>
 </resources>

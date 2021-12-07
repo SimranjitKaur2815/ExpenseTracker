@@ -22,19 +22,22 @@ import com.example.expensetrackersystem.ui.activities.login.LoginActivity;
 import com.example.expensetrackersystem.ui.fragments.AboutFragment;
 
 import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesFragment;
+import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesListener;
 import com.example.expensetrackersystem.ui.fragments.home.HomeFragment;
 
 import com.example.expensetrackersystem.ui.fragments.SettingsFragment;
 import com.example.expensetrackersystem.ui.fragments.StarredFragment;
+import com.example.expensetrackersystem.utils.DateHelper;
 import com.example.expensetrackersystem.utils.db.DbHelper;
 import com.example.expensetrackersystem.utils.db.UserDbListener;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ExpensesListener.AllExpenseListener {
 
     private static final String TAG = "MainActivity";
     DrawerLayout drawerLayout;
@@ -74,13 +77,13 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.getMenu().getItem(0).setChecked(true);
-        selectDrawerItem(R.id.nav_home);
+        selectDrawerItem(R.id.nav_home, null);
     }
 
     private void initListeners() {
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
-                    selectDrawerItem(menuItem.getItemId());
+                    selectDrawerItem(menuItem.getItemId(), null);
                     return true;
                 });
 
@@ -100,17 +103,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void selectDrawerItem(int menuItemId) {
+    private void selectDrawerItem(int menuItemId, Date createdDate) {
 
 
         Fragment fragment = null;
         switch (menuItemId) {
             case R.id.nav_home:
-                fragment = new HomeFragment();
-
+                if (createdDate == null)
+                    fragment = new HomeFragment();
+                else
+                    fragment = new HomeFragment(createdDate);
                 break;
             case R.id.nav_all_expenses:
-                fragment = new ExpensesFragment();
+                fragment = new ExpensesFragment(this);
 
                 break;
             case R.id.nav_settings:
@@ -133,11 +138,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Highlight the selected item has been done by NavigationView
 
-        // Set action bar title
         // Close the navigation drawer
         drawerLayout.closeDrawers();
 
     }
 
-
+    // Edit all expenses
+    @Override
+    public void onEdit(String createdDate) {
+        // Highlight the selected item by NavigationView
+        navigationView.getMenu().getItem(0).setChecked(true);
+        selectDrawerItem(R.id.nav_home,DateHelper.convertStringToDate(createdDate));
+    }
 }

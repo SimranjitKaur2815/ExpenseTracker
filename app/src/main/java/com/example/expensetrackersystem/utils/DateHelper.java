@@ -1,14 +1,29 @@
 package com.example.expensetrackersystem.utils;
 
+import android.util.Log;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateHelper {
-    public static String getTodayDate() {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat date = new SimpleDateFormat("MMM dd, yyyy");
-        return date.format(cal.getTime());
+    private static final String TAG = "DateHelper";
+
+    public static Date convertStringToDate(String date) {
+        try {
+
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+            Date formattedDate = dateFormat.parse(date);
+            cal.setTime(formattedDate);
+            return cal.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.e(TAG, "convertStringToDate: " + e.toString());
+            return null;
+        }
     }
 
     public static String getProcessedDate(int year, int month, int day) {

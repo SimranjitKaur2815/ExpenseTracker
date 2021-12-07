@@ -222,7 +222,7 @@ public class DbHelper {
         });
     }
 
-    public void deleteExpense(Context context, ExpenseItems expenseItem, ExpenseDbListener.AddExpenseListener listener) {
+    public void deleteExpense(Context context, ExpenseItems expenseItem, ExpenseDbListener.DeleteExpenseListener listener) {
         CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
@@ -249,9 +249,16 @@ public class DbHelper {
                         List<ExpensesModel> expensesModelList = new ArrayList<>();
                         for (String date : dates) {
                             ExpensesModel expensesModel = new ExpensesModel();
+                            List<ExpenseItems> expenseItems = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpenses(user.getId(), date);
+                            Double totPrice = 0.0d;
+                            for (ExpenseItems item : expenseItems) {
+                                totPrice+= item.getItemPrice();
+                            }
+                            expensesModel.setTotalPrice(totPrice);
                             expensesModel.setSubmittedDate(date);
-                            expensesModel.setExpenseItems(DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpenses(user.getId(), date));
+                            expensesModel.setExpenseItems(expenseItems);
                             expensesModelList.add(expensesModel);
+
                         }
                         listener.onSuccess(expensesModelList);
                     } else {
@@ -267,6 +274,22 @@ public class DbHelper {
         });
     }
 
+    public void deleteExpenseByDate(Context context,String createdDate,ExpenseDbListener.DeleteExpenseListener listener){
+        CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
+            @Override
+            public void onSuccess(User user) {
+                executor.execute(() -> {
+                    DatabaseClient.getInstance(context).getAppDatabase().expensesDao().deleteByDate(createdDate);
+                    ((Activity) context).runOnUiThread(listener::onSuccess);
+                });
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                listener.onFailure(msg);
+            }
+        });
+    }
     /* --------- EXPENSES -----------*/
 
 }

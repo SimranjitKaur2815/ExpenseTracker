@@ -57,11 +57,21 @@ public class HomeFragment extends Fragment {
     ExpenseItems updatedExpenseItem;
     Date expenseDate;
 
+
+    public HomeFragment() {
+        expenseDate = Calendar.getInstance().getTime();
+    }
+
+    public HomeFragment(Date expenseDate) {
+        this.expenseDate = expenseDate;
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
     }
+
 
     @Nullable
     @Override
@@ -91,7 +101,6 @@ public class HomeFragment extends Fragment {
         bottomSheetDialog = new BottomSheetDialog(context, R.style.CustomShapeAppearanceBottomSheetDialog);
         bottomSheetDialog.setContentView(bottomSheetView);
         executor = Executors.newSingleThreadExecutor();
-        expenseDate = Calendar.getInstance().getTime();
         expenseDateString = DateHelper.getDateInCommonFormat(expenseDate.getTime());
         expenseDateTV.setText(expenseDateString);
         bottomSheetDialog.setContentView(bottomSheetView);
@@ -99,7 +108,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSuccess(User currentUser) {
                 user = currentUser;
-                Log.e(TAG, "onSuccess: USER -> " + user.toString());
                 getExpenses();
             }
 
@@ -169,7 +177,7 @@ public class HomeFragment extends Fragment {
                         builder.setTitle("Warning");
                         builder.setMessage("Do you really wan to delete this expense ?");
                         builder.setPositiveButton("Yes", (d, i) -> {
-                            DbHelper.getInstance().deleteExpense(context, expenseItems, new ExpenseDbListener.AddExpenseListener() {
+                            DbHelper.getInstance().deleteExpense(context, expenseItems, new ExpenseDbListener.DeleteExpenseListener() {
                                 @Override
                                 public void onSuccess() {
                                     getExpenses();

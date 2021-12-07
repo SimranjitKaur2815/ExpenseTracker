@@ -36,10 +36,10 @@ public class ExpenseItems {
 
     @ColumnInfo(name = "created_timestamp")
     @TypeConverters({DateTypeConverter.class})
-    private Date createdTimeStamp = Calendar.getInstance().getTime();
+    private Date createdTimeStamp;
 
     @ColumnInfo(name = "created_date")
-    private String createdDate = DateHelper.getDateInCommonFormat(createdTimeStamp.getTime());
+    private String createdDate;
 
 
     public ExpenseItems(String itemName, Double itemPrice, int userId, Date createdTimeStamp) {
@@ -47,6 +47,7 @@ public class ExpenseItems {
         this.itemPrice = itemPrice;
         this.userId = userId;
         this.createdTimeStamp = createdTimeStamp;
+        this.createdDate=DateHelper.getDateInCommonFormat(createdTimeStamp.getTime());
     }
 
     public int getId() {

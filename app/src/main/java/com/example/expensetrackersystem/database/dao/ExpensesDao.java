@@ -33,4 +33,8 @@ public interface ExpensesDao {
 
     @Delete
     void delete(ExpenseItems expenseItem);
+
+    @Query("DELETE FROM expenseItems WHERE created_date=:createdDate")
+    void deleteByDate(String createdDate);
+
 }

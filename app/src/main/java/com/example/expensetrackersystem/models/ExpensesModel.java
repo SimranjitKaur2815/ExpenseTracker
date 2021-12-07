@@ -8,6 +8,15 @@ import java.util.List;
 public class ExpensesModel {
     private List<ExpenseItems> expenseItems;
     private String submittedDate;
+    private Double totalPrice;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public List<ExpenseItems> getExpenseItems() {
         return expenseItems;
@@ -30,6 +39,7 @@ public class ExpensesModel {
         return "ExpensesModel{" +
                 "expenseItems=" + expenseItems +
                 ", submittedDate='" + submittedDate + '\'' +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }
