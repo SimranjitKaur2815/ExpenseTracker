@@ -2,6 +2,7 @@ package com.example.expensetrackersystem.utils.db;
 
 import com.example.expensetrackersystem.database.entities.ExpenseItems;
 import com.example.expensetrackersystem.database.entities.ExpenseItemsWithUser;
+import com.example.expensetrackersystem.models.ExpenseDetailModel;
 import com.example.expensetrackersystem.models.ExpensesModel;
 
 import java.util.List;
@@ -24,8 +25,15 @@ public interface ExpenseDbListener {
 
         void onFailure(String msg);
     }
-    interface DeleteExpenseListener{
+
+    interface DeleteExpenseListener {
         void onSuccess();
+
+        void onFailure(String msg);
+    }
+
+    interface GetExpenseDetailsListener {
+        void onSuccess(ExpenseDetailModel expenseDetailModel);
 
         void onFailure(String msg);
     }

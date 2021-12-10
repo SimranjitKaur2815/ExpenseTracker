@@ -10,15 +10,12 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.expensetrackersystem.R;
-import com.example.expensetrackersystem.database.DatabaseClient;
-import com.example.expensetrackersystem.database.entities.User;
 import com.example.expensetrackersystem.ui.activities.login.LoginActivity;
+import com.example.expensetrackersystem.ui.activities.profile.ProfileActivity;
 import com.example.expensetrackersystem.ui.fragments.AboutFragment;
 
 import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesFragment;
@@ -33,9 +30,6 @@ import com.example.expensetrackersystem.utils.db.UserDbListener;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements ExpensesListener.AllExpenseListener {
 
@@ -43,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    ImageView navigationIcon;
+    ImageView navigationIcon, myProfileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
     private void initElements() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        myProfileIcon = findViewById(R.id.myProfileIcon);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
         navigationIcon = findViewById(R.id.navigationIcon);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -90,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
         navigationIcon.setOnClickListener(view -> {
             drawerLayout.openDrawer(GravityCompat.START);
         });
+        myProfileIcon.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
 
     }
 
@@ -148,6 +144,6 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
     public void onEdit(String createdDate) {
         // Highlight the selected item by NavigationView
         navigationView.getMenu().getItem(0).setChecked(true);
-        selectDrawerItem(R.id.nav_home,DateHelper.convertStringToDate(createdDate));
+        selectDrawerItem(R.id.nav_home, DateHelper.convertStringToDate(createdDate));
     }
 }

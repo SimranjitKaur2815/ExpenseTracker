@@ -9,6 +9,7 @@ import com.example.expensetrackersystem.database.entities.CurrentUser;
 import com.example.expensetrackersystem.database.entities.ExpenseItems;
 import com.example.expensetrackersystem.database.entities.ExpenseItemsWithUser;
 import com.example.expensetrackersystem.database.entities.User;
+import com.example.expensetrackersystem.models.ExpenseDetailModel;
 import com.example.expensetrackersystem.models.ExpensesModel;
 import com.scottyab.aescrypt.AESCrypt;
 
@@ -252,7 +253,7 @@ public class DbHelper {
                             List<ExpenseItems> expenseItems = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpenses(user.getId(), date);
                             Double totPrice = 0.0d;
                             for (ExpenseItems item : expenseItems) {
-                                totPrice+= item.getItemPrice();
+                                totPrice += item.getItemPrice();
                             }
                             expensesModel.setTotalPrice(totPrice);
                             expensesModel.setSubmittedDate(date);
@@ -274,7 +275,7 @@ public class DbHelper {
         });
     }
 
-    public void deleteExpenseByDate(Context context,String createdDate,ExpenseDbListener.DeleteExpenseListener listener){
+    public void deleteExpenseByDate(Context context, String createdDate, ExpenseDbListener.DeleteExpenseListener listener) {
         CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
@@ -287,6 +288,25 @@ public class DbHelper {
             @Override
             public void onFailure(String msg) {
                 listener.onFailure(msg);
+            }
+        });
+    }
+
+    public void getExpenseDetails(Context context, ExpenseDbListener.GetExpenseDetailsListener listener) {
+        CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
+            @Override
+            public void onSuccess(User user) {
+                executor.execute(() -> {
+                    ExpenseDetailModel expenseDetailModel = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpensesDetails(user.getId());
+                    listener.onSuccess(expenseDetailModel);
+                    // agar na hoya te
+                });
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                listener.onFailure(msg);
+
             }
         });
     }

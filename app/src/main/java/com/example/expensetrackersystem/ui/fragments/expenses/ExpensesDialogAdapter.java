@@ -33,7 +33,7 @@ public class ExpensesDialogAdapter extends RecyclerView.Adapter<ExpensesDialogAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         ExpenseItems items = expenseItemsList.get(position);
-        holder.itemNo.setText(String.valueOf(position + 1));
+        holder.itemNo.setText(String.valueOf(position + 1)+". ");
         holder.itemName.setText(items.getItemName());
         holder.itemPrice.setText("$" + items.getItemPrice());
 

@@ -2,12 +2,16 @@ package com.example.expensetrackersystem.ui.fragments.expenses;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,14 +21,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager;
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.database.entities.ExpenseItems;
 import com.example.expensetrackersystem.models.ExpensesModel;
 import com.example.expensetrackersystem.utils.db.DbHelper;
 import com.example.expensetrackersystem.utils.db.ExpenseDbListener;
+import com.google.android.material.button.MaterialButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ExpensesFragment extends Fragment {
@@ -35,6 +38,7 @@ public class ExpensesFragment extends Fragment {
     ExpensesListener.AllExpenseListener listener;
     AlertDialog.Builder expenseDialog;
     View expenseDialogView;
+    MaterialButton okButton;
 
 
     public ExpensesFragment(ExpensesListener.AllExpenseListener listener) {
@@ -65,7 +69,7 @@ public class ExpensesFragment extends Fragment {
     private void initElements() {
         expenses_rv = view.findViewById(R.id.expenses_rv);
         expenses_rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        expenseDialog = new AlertDialog.Builder(context);
+        expenseDialog = new AlertDialog.Builder(context, R.style.CustomDialog);
 
     }
 
@@ -98,13 +102,14 @@ public class ExpensesFragment extends Fragment {
                     @Override
                     public void onClick(List<ExpenseItems> expenseItemsList) {
                         expenseDialogView = LayoutInflater.from(context).inflate(R.layout.expense_dia_layout, null, false);
+                        okButton = expenseDialogView.findViewById(R.id.okButton);
                         expenseDialogRV = expenseDialogView.findViewById(R.id.expensesDialogRV);
+                        ((TextView) expenseDialogView.findViewById(R.id.dialogDate)).setText(expenseItemsList.get(0).getCreatedDate());
                         expenseDialogRV.setLayoutManager(new LinearLayoutManager(context));
                         expenseDialog.setView(expenseDialogView);
-                        expenseDialog.setPositiveButton("OK", (d, i) -> {
-                            expenseDialogRV.setAdapter(null);
-                        });
-                        expenseDialog.create().show();
+                        AlertDialog dialog = expenseDialog.create();
+                        okButton.setOnClickListener(v -> dialog.dismiss());
+                        dialog.show();
                         expenseDialogRV.setAdapter(new ExpensesDialogAdapter(context, expenseItemsList));
                     }
                 })));
