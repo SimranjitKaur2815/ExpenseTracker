@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.database.entities.ExpenseItems;
@@ -37,7 +38,7 @@ public class ExpensesFragment extends Fragment {
         expenses_rv = view.findViewById(R.id.expenses_rv);
         ExpensesAdapter expensesAdapter = new ExpensesAdapter(expensesModels);
         expenses_rv.setAdapter(expensesAdapter);
-        expenses_rv.setLayoutManager(new LinearLayoutManager(context));
+        expenses_rv.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
         return view;
     }

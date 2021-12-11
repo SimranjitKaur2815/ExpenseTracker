@@ -13,14 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.database.entities.ExpenseItems;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder> {
     public Context context;
-    private List<ExpenseItems> expensesModels;
+    private List<String> expensesModels=new ArrayList<>();
 
-    public ExpensesAdapter(List<ExpenseItems> expensesModels) {
-        this.expensesModels = expensesModels;
+    public ExpensesAdapter(List<ExpenseItems> ss) {
+//        this.expensesModels = expensesModels;
+        expensesModels.add("sadasdadasdasd");
+        expensesModels.add("sadasdadasdasd nbehbfjbf djfhjdbfjbdjf jfjdenfj");
+        expensesModels.add("sadasdadasdasd fdbfjebdjdc jdckdnybjdbcdc,djbfjebfjejejebjebjbjebjefbj ejbfjebfjebfjebjeb");
+        expensesModels.add("sadasdadasdasd nvdnjjc bdjsbcjksdb dscjksdbcks dsbdsjkb");
+        expensesModels.add("sadasdadasdasddbjds nd");
+        expensesModels.add("sadasdadasdasd jbdejwbkjwbkwbk");
+        expensesModels.add("sadasdadasdasd jdjsbkkkkkkkkkkkkkkkkkkkk bdjsbjjhh dbjwbhjbdvhcbjwh dbjcdbsbjdsbj dsbjsbfksb vbkjdbfjkbwekbfkbkewbf\n hdvfhjdvfjdvfv\n hefhjwvf jvfjewvfewjfevjwvfhjwevfjew");
+
     }
 
 
@@ -33,7 +42,7 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
 
     @Override
     public void onBindViewHolder(@NonNull ExpensesViewHolder holder, int position) {
-
+        holder.expense_content.setText(expensesModels.get(position));
 
     }
 
