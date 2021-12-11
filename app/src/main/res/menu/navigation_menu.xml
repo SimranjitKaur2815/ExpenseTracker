@@ -4,20 +4,27 @@
     <group android:checkableBehavior="single">
     <item
         android:id="@+id/nav_home"
-        android:title="Home" />
+        android:title="Home"
+        android:icon="@drawable/ic_home"/>
 
     <item
         android:id="@+id/nav_all_expenses"
-        android:title="All Expenses" />
+        android:title="All Expenses"
+        android:icon="@drawable/ic_expenses"
+        />
 
     <item
         android:id="@+id/nav_about"
-        android:title="About" />
+        android:title="About"
+        android:icon="@drawable/ic_about"
+        />
     <item
         android:id="@+id/nav_starred"
-        android:title="Starred" />
+        android:title="Starred"
+        android:icon="@drawable/ic_starred"/>
     <item
         android:id="@+id/nav_settings"
-        android:title="Settings" />
+        android:title="Settings"
+        android:icon="@drawable/ic_settings"/>
     </group>
 </menu>
