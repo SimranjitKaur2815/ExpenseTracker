@@ -6,16 +6,20 @@ import java.util.List;
 
 
 public interface UserDbListener {
-     interface AuthListener{
+     interface onAuthListener {
         void onSuccess();
         void onFailure(String msg);
     }
-    interface GetUsersListener{
+    interface onGetUsersListener {
         void onSuccess(List<User> users);
         void onFailure(String msg);
     }
-    interface GetCurrentUserListener{
+    interface onGetCurrentUserListener {
         void onSuccess(User user);
         void onFailure(String msg);
+    }
+    interface onDeleteAccountListener{
+         void onSuccess();
+         void onFailure(String msg);
     }
 }

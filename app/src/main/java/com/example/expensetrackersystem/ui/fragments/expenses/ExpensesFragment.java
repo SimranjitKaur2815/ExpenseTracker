@@ -2,10 +2,7 @@ package com.example.expensetrackersystem.ui.fragments.expenses;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,7 +72,7 @@ public class ExpensesFragment extends Fragment {
 
 
     private void getAllExpenses() {
-        DbHelper.getInstance().getAllExpenses(context, new ExpenseDbListener.GetAllExpenseListener() {
+        DbHelper.getInstance().getAllExpenses(context, new ExpenseDbListener.onGetAllExpenseListener() {
             @Override
             public void onSuccess(List<ExpensesModel> expensesModelList) {
                 ((Activity) context).runOnUiThread(() -> expenses_rv.setAdapter(new ExpensesAdapter(context, expensesModelList, new ExpensesListener() {
@@ -86,7 +83,7 @@ public class ExpensesFragment extends Fragment {
 
                     @Override
                     public void onDelete(String createdDate) {
-                        DbHelper.getInstance().deleteExpenseByDate(context, createdDate, new ExpenseDbListener.DeleteExpenseListener() {
+                        DbHelper.getInstance().deleteExpenseByDate(context, createdDate, new ExpenseDbListener.onDeleteExpenseListener() {
                             @Override
                             public void onSuccess() {
                                 getAllExpenses();

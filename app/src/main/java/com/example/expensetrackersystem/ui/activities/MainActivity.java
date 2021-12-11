@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DbHelper.getInstance().isLoggedIn(this, new UserDbListener.AuthListener() {
+        DbHelper.getInstance().isLoggedIn(this, new UserDbListener.onAuthListener() {
             @Override
             public void onSuccess() {
                 init();

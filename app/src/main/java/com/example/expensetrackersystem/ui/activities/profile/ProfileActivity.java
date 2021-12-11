@@ -61,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
         expenseDetailRV.setLayoutManager(new GridLayoutManager(this, 2));
         profileOptionsRV.setLayoutManager(new LinearLayoutManager(this));
         profileOptionsRV.setAdapter(new ProfileOptionsAdapter(this, modelList));
-        DbHelper.getInstance().getExpenseDetails(this, new ExpenseDbListener.GetExpenseDetailsListener() {
+        DbHelper.getInstance().getExpenseDetails(this, new ExpenseDbListener.onGetExpenseDetailsListener() {
             @Override
             public void onSuccess(ExpenseDetailModel expenseDetailModel) {
                 setExpenseDetails(expenseDetailModel);

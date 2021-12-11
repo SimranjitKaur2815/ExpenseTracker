@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,10 +35,11 @@ public class LoginAdapter extends RecyclerView.Adapter<LoginAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.user.setText(users.get(position).getFirstName());
+        holder.user.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName());
         holder.user.setOnClickListener(v -> {
             listener.onUserClick(users.get(position));
         });
+        holder.removeAcc.setOnClickListener(v -> listener.onUserDelete(users.get(position)));
     }
 
     @Override
@@ -47,10 +49,12 @@ public class LoginAdapter extends RecyclerView.Adapter<LoginAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView user;
+        ImageView removeAcc;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             user = itemView.findViewById(R.id.user);
+            removeAcc = itemView.findViewById(R.id.removeAcc);
         }
     }
 }

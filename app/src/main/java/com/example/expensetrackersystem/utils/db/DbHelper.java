@@ -7,7 +7,6 @@ import android.util.Log;
 import com.example.expensetrackersystem.database.DatabaseClient;
 import com.example.expensetrackersystem.database.entities.CurrentUser;
 import com.example.expensetrackersystem.database.entities.ExpenseItems;
-import com.example.expensetrackersystem.database.entities.ExpenseItemsWithUser;
 import com.example.expensetrackersystem.database.entities.User;
 import com.example.expensetrackersystem.models.ExpenseDetailModel;
 import com.example.expensetrackersystem.models.ExpensesModel;
@@ -17,7 +16,6 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DbHelper {
@@ -36,7 +34,7 @@ public class DbHelper {
     }
     /*----- PRIVATE FUNCTIONS-------*/
 
-    private void CURRENT_USER(Context context, UserDbListener.GetCurrentUserListener listener) {
+    private void CURRENT_USER(Context context, UserDbListener.onGetCurrentUserListener listener) {
         executor.execute(() -> {
             int userId = DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().getCurrentUser();
             if (userId > 0) {
@@ -57,7 +55,7 @@ public class DbHelper {
 
     /* --------- USER -----------*/
 
-    public void registerUser(Context context, User user, UserDbListener.AuthListener listener) {
+    public void registerUser(Context context, User user, UserDbListener.onAuthListener listener) {
         executor.execute(() -> {
             User getUser = DatabaseClient.getInstance(context).getAppDatabase().userDao().getUserByName(user.getFirstName(), user.getLastName());
             if (getUser == null) {
@@ -69,13 +67,13 @@ public class DbHelper {
         });
     }
 
-    public void loginUser(Context context, int userId, String password, UserDbListener.AuthListener listener) {
+    public void loginUser(Context context, int userId, String password, UserDbListener.onAuthListener listener) {
         executor.execute(() -> {
             try {
                 String encPassword = AESCrypt.encrypt(password, password);
                 User getUser = DatabaseClient.getInstance(context).getAppDatabase().userDao().getUserByIdAndPassword(userId, encPassword);
                 if (getUser != null) {
-                    logoutUser(true, context, new UserDbListener.AuthListener() {
+                    logoutUser(true, context, new UserDbListener.onAuthListener() {
                         @Override
                         public void onSuccess() {
                             CurrentUser currentUser = new CurrentUser(userId);
@@ -100,7 +98,7 @@ public class DbHelper {
         });
     }
 
-    public void logoutUser(boolean callingFromHelper, Context context, UserDbListener.AuthListener listener) {
+    public void logoutUser(boolean callingFromHelper, Context context, UserDbListener.onAuthListener listener) {
         executor.execute(() -> {
             try {
                 DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().deleteCurrentUser();
@@ -119,7 +117,7 @@ public class DbHelper {
     }
 
 
-    public void getAllUsers(Context context, UserDbListener.GetUsersListener listener) {
+    public void getAllUsers(Context context, UserDbListener.onGetUsersListener listener) {
         executor.execute(() -> {
             List<User> users = DatabaseClient.getInstance(context).getAppDatabase().userDao().getAllUsers();
             ((Activity) context).runOnUiThread(() -> {
@@ -132,7 +130,7 @@ public class DbHelper {
         });
     }
 
-    public void isLoggedIn(Context context, UserDbListener.AuthListener listener) {
+    public void isLoggedIn(Context context, UserDbListener.onAuthListener listener) {
         executor.execute(() -> {
             int userId = DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().getCurrentUser();
             if (userId > 0) {
@@ -149,7 +147,7 @@ public class DbHelper {
         });
     }
 
-    public void getCurrentUser(Context context, UserDbListener.GetCurrentUserListener listener) {
+    public void getCurrentUser(Context context, UserDbListener.onGetCurrentUserListener listener) {
         executor.execute(() -> {
             int userId = DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().getCurrentUser();
             if (userId > 0) {
@@ -166,13 +164,18 @@ public class DbHelper {
         });
     }
 
+    public void deleteUser(Context context,UserDbListener.onDeleteAccountListener listener){
+//        CURRENT_USER(context,);
+    }
+
+
     /* --------- USER -----------*/
 
 
 
     /* --------- EXPENSES -----------*/
 
-    public void getExpenses(Context context, int userId, String expenseDate, ExpenseDbListener.GetExpensesListener listener) {
+    public void getExpenses(Context context, int userId, String expenseDate, ExpenseDbListener.onGetExpensesListener listener) {
         executor.execute(() -> {
             List<ExpenseItems> items = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpenses(userId, expenseDate);
             for (ExpenseItems item : items) {
@@ -187,8 +190,8 @@ public class DbHelper {
 
     }
 
-    public void addExpense(Context context, ExpenseItems expenseItems, ExpenseDbListener.AddExpenseListener listener) {
-        CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
+    public void addExpense(Context context, ExpenseItems expenseItems, ExpenseDbListener.onAddExpenseListener listener) {
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
                 executor.execute(() -> {
@@ -204,8 +207,8 @@ public class DbHelper {
         });
     }
 
-    public void updateExpense(Context context, ExpenseItems expenseItem, ExpenseDbListener.AddExpenseListener listener) {
-        CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
+    public void updateExpense(Context context, ExpenseItems expenseItem, ExpenseDbListener.onAddExpenseListener listener) {
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
                 executor.execute(() -> {
@@ -223,8 +226,8 @@ public class DbHelper {
         });
     }
 
-    public void deleteExpense(Context context, ExpenseItems expenseItem, ExpenseDbListener.DeleteExpenseListener listener) {
-        CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
+    public void deleteExpense(Context context, ExpenseItems expenseItem, ExpenseDbListener.onDeleteExpenseListener listener) {
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
                 executor.execute(() -> {
@@ -240,8 +243,8 @@ public class DbHelper {
         });
     }
 
-    public void getAllExpenses(Context context, ExpenseDbListener.GetAllExpenseListener listener) {
-        CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
+    public void getAllExpenses(Context context, ExpenseDbListener.onGetAllExpenseListener listener) {
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
                 executor.execute(() -> {
@@ -275,8 +278,8 @@ public class DbHelper {
         });
     }
 
-    public void deleteExpenseByDate(Context context, String createdDate, ExpenseDbListener.DeleteExpenseListener listener) {
-        CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
+    public void deleteExpenseByDate(Context context, String createdDate, ExpenseDbListener.onDeleteExpenseListener listener) {
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
                 executor.execute(() -> {
@@ -292,8 +295,8 @@ public class DbHelper {
         });
     }
 
-    public void getExpenseDetails(Context context, ExpenseDbListener.GetExpenseDetailsListener listener) {
-        CURRENT_USER(context, new UserDbListener.GetCurrentUserListener() {
+    public void getExpenseDetails(Context context, ExpenseDbListener.onGetExpenseDetailsListener listener) {
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
                 executor.execute(() -> {

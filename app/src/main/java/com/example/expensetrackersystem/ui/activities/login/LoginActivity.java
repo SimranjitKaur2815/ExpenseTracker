@@ -24,7 +24,7 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    LinearLayout passLay;
+    LinearLayout passLay,usersLay;
     EditText password;
     ImageView backBtn;
     RecyclerView usersRecyc;
@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initElements() {
         passLay = findViewById(R.id.passLay);
+        usersLay = findViewById(R.id.usersLay);
         password = findViewById(R.id.password);
         backBtn = findViewById(R.id.backBtn);
         usersRecyc = findViewById(R.id.usersRecyc);
@@ -56,12 +57,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initListeners() {
         backBtn.setOnClickListener(v -> {
-            passLay.setVisibility(View.INVISIBLE);
+            passLay.setVisibility(View.GONE);
             password.setText("");
-            usersRecyc.setVisibility(View.VISIBLE);
+            usersLay.setVisibility(View.VISIBLE);
         });
         submit.setOnClickListener(v -> {
-            DbHelper.getInstance().loginUser(this, user.getId(), password.getText().toString(), new UserDbListener.AuthListener() {
+            DbHelper.getInstance().loginUser(this, user.getId(), password.getText().toString(), new UserDbListener.onAuthListener() {
                 @Override
                 public void onSuccess() {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getRegisteredUsers() {
-        DbHelper.getInstance().getAllUsers(this, new UserDbListener.GetUsersListener() {
+        DbHelper.getInstance().getAllUsers(this, new UserDbListener.onGetUsersListener() {
             @Override
             public void onSuccess(List<User> users) {
 
@@ -86,7 +87,12 @@ public class LoginActivity extends AppCompatActivity {
                         public void onUserClick(User user) {
                             LoginActivity.this.user = user;
                             passLay.setVisibility(View.VISIBLE);
-                            usersRecyc.setVisibility(View.INVISIBLE);
+                            usersLay.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onUserDelete(User user) {
+                            DbHelper.getInstance().
                         }
                     }));
 

@@ -8,31 +8,31 @@ import com.example.expensetrackersystem.models.ExpensesModel;
 import java.util.List;
 
 public interface ExpenseDbListener {
-    interface GetExpensesListener {
+    interface onGetExpensesListener {
         void onSuccess(List<ExpenseItems> items);
 
         void onFailure(String msg);
     }
 
-    interface AddExpenseListener {
+    interface onAddExpenseListener {
         void onSuccess();
 
         void onFailure(String msg);
     }
 
-    interface GetAllExpenseListener {
+    interface onGetAllExpenseListener {
         void onSuccess(List<ExpensesModel> expensesModelList);
 
         void onFailure(String msg);
     }
 
-    interface DeleteExpenseListener {
+    interface onDeleteExpenseListener {
         void onSuccess();
 
         void onFailure(String msg);
     }
 
-    interface GetExpenseDetailsListener {
+    interface onGetExpenseDetailsListener {
         void onSuccess(ExpenseDetailModel expenseDetailModel);
 
         void onFailure(String msg);

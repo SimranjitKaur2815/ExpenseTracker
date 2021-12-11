@@ -74,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
                         firstNameEt.getText().toString(),
                         lastNameEt.getText().toString(),
                         AESCrypt.encrypt(passwordEt.getText().toString(), passwordEt.getText().toString()), dob);
-                DbHelper.getInstance().registerUser(this, user, new UserDbListener.AuthListener() {
+                DbHelper.getInstance().registerUser(this, user, new UserDbListener.onAuthListener() {
                     @Override
                     public void onSuccess() {
                         startActivity(new Intent(SignUpActivity.this, LoginActivity.class));

@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="22dp"
     tools:context=".ui.activities.login.LoginActivity">
+
 
     <LinearLayout
         android:id="@+id/passLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="22dp"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -26,19 +27,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:layout_gravity="end"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/light_orange"
+            android:text="Login"
+            android:textColor="@color/text_orange" />
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/usersRecyc"
+    <LinearLayout
+        android:id="@+id/usersLay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="22dp"
+            android:text="Select your account"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/usersRecyc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
 </LinearLayout>

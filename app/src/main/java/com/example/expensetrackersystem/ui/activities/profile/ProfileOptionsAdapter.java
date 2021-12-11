@@ -1,6 +1,8 @@
 package com.example.expensetrackersystem.ui.activities.profile;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.models.ProfileOptionsModel;
+import com.example.expensetrackersystem.ui.activities.login.LoginActivity;
 
 import java.util.List;
 
@@ -47,7 +50,7 @@ public class ProfileOptionsAdapter extends RecyclerView.Adapter<ProfileOptionsAd
     private void manageOptionClick(String optionCode) {
         switch (optionCode) {
             case "MA":
-                Toast.makeText(context, optionCode, Toast.LENGTH_SHORT).show();
+                ((Activity) context).startActivity(new Intent(context, LoginActivity.class));
                 break;
             case "CA":
                 Toast.makeText(context, optionCode, Toast.LENGTH_SHORT).show();

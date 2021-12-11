@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
         expenseDateString = DateHelper.getDateInCommonFormat(expenseDate.getTime());
         expenseDateTV.setText(expenseDateString);
         bottomSheetDialog.setContentView(bottomSheetView);
-        DbHelper.getInstance().getCurrentUser(context, new UserDbListener.GetCurrentUserListener() {
+        DbHelper.getInstance().getCurrentUser(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User currentUser) {
                 user = currentUser;
@@ -157,7 +157,7 @@ public class HomeFragment extends Fragment {
     private void getExpenses() {
         addExpenseMatBtn.setVisibility(View.VISIBLE);
         updateExpenseMatBtn.setVisibility(View.GONE);
-        DbHelper.getInstance().getExpenses(context, user.getId(), expenseDateString, new ExpenseDbListener.GetExpensesListener() {
+        DbHelper.getInstance().getExpenses(context, user.getId(), expenseDateString, new ExpenseDbListener.onGetExpensesListener() {
             @Override
             public void onSuccess(List<ExpenseItems> items) {
                 expenseRecyc.setAdapter(new HomeExpensesAdapter(context, items, new HomeExpensesListener() {
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment {
                         builder.setTitle("Warning");
                         builder.setMessage("Do you really wan to delete this expense ?");
                         builder.setPositiveButton("Yes", (d, i) -> {
-                            DbHelper.getInstance().deleteExpense(context, expenseItems, new ExpenseDbListener.DeleteExpenseListener() {
+                            DbHelper.getInstance().deleteExpense(context, expenseItems, new ExpenseDbListener.onDeleteExpenseListener() {
                                 @Override
                                 public void onSuccess() {
                                     getExpenses();
@@ -229,7 +229,7 @@ public class HomeFragment extends Fragment {
 
     private void AddExpense() {
         ExpenseItems expenseItems = new ExpenseItems(itemName, itemPrice, user.getId(), expenseDate);
-        DbHelper.getInstance().addExpense(context, expenseItems, new ExpenseDbListener.AddExpenseListener() {
+        DbHelper.getInstance().addExpense(context, expenseItems, new ExpenseDbListener.onAddExpenseListener() {
             @Override
             public void onSuccess() {
                 itemNameET.setText("");
@@ -251,7 +251,7 @@ public class HomeFragment extends Fragment {
     private void UpdateExpense() {
         updatedExpenseItem.setItemPrice(itemPrice);
         updatedExpenseItem.setItemName(itemName);
-        DbHelper.getInstance().updateExpense(context, updatedExpenseItem, new ExpenseDbListener.AddExpenseListener() {
+        DbHelper.getInstance().updateExpense(context, updatedExpenseItem, new ExpenseDbListener.onAddExpenseListener() {
             @Override
             public void onSuccess() {
                 getExpenses();
