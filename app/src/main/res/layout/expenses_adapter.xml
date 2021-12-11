@@ -2,81 +2,111 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-  >
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="10dp"
 
-        app:cardElevation="4dp"
-
-        >
+        android:layout_margin="4dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/expense_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/expensesRv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="6dp"/>
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="12dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/moreText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-              >
+                android:layout_marginStart="22dp"
+                android:text="...More"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/lightGrey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/calculated_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/button_bg"
+                    android:backgroundTint="#FFD79C"
+                    android:gravity="end"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="$2344"
+                    android:textColor="#F3744C"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/line" />
+
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:layout_marginVertical="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line">
 
-                    <TextView
-                        android:id="@+id/calculated_amount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="$2344"
-                        android:textColor="#F3744C"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/edit"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:src="@drawable/ic_all_edit" />
 
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:text="24th Jan"
-                        android:textColor="#515151"
-                        android:textSize="12sp"
-                         />
-
+                    <ImageView
+                        android:id="@+id/delete"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_all_bin" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/edit"
-                    android:layout_width="20dp"
+    <TextView
+                    android:id="@+id/expenseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="end"
+                    android:text="24,Jan"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/calculated_amount" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_all_edit" />
-
-                <ImageView
-                    android:id="@+id/delete"
-                    android:layout_width="18dp"
-                    android:layout_margin="10dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_all_bin" />
-
-            </LinearLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

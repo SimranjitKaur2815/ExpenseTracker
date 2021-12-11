@@ -8,89 +8,90 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.expensetrackersystem.R;
+import com.example.expensetrackersystem.ui.activities.login.LoginActivity;
+import com.example.expensetrackersystem.ui.activities.profile.ProfileActivity;
 import com.example.expensetrackersystem.ui.fragments.AboutFragment;
 
 import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesFragment;
+import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesListener;
 import com.example.expensetrackersystem.ui.fragments.home.HomeFragment;
 
 import com.example.expensetrackersystem.ui.fragments.SettingsFragment;
 import com.example.expensetrackersystem.ui.fragments.StarredFragment;
+import com.example.expensetrackersystem.utils.DateHelper;
+import com.example.expensetrackersystem.utils.db.DbHelper;
+import com.example.expensetrackersystem.utils.db.UserDbListener;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Date;
 
+public class MainActivity extends AppCompatActivity implements ExpensesListener.AllExpenseListener {
+
+    private static final String TAG = "MainActivity";
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    ImageView navigationIcon;
+    ImageView navigationIcon, myProfileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DbHelper.getInstance().isLoggedIn(this, new UserDbListener.onAuthListener() {
+            @Override
+            public void onSuccess() {
+                init();
+            }
 
+            @Override
+            public void onFailure(String msg) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+    }
+
+    public void init() {
+        initElements();
+        initListeners();
+    }
+
+
+    private void initElements() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        myProfileIcon = findViewById(R.id.myProfileIcon);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
         navigationIcon = findViewById(R.id.navigationIcon);
-
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_layout_main, new HomeFragment()).commit();
+        navigationView.getMenu().getItem(0).setChecked(true);
+        selectDrawerItem(R.id.nav_home, null);
+    }
 
-
-        navigationDrawer(navigationView);
-
+    private void initListeners() {
+        navigationView.setNavigationItemSelectedListener(
+                menuItem -> {
+                    selectDrawerItem(menuItem.getItemId(), null);
+                    return true;
+                });
 
         navigationIcon.setOnClickListener(view -> {
             drawerLayout.openDrawer(GravityCompat.START);
         });
-
-
-   /*     Executor executor = Executors.newSingleThreadExecutor();
-        User user = new User();
-        user.firstName = "Simranjit";
-        user.lastName = "Kaur";
-        executor.execute(()->{
-//           DatabaseClient.getInstance(this).getAppDatabase().userDao().insertAll(user);
-        });
-
-        ExpenseItems expenseItems = new ExpenseItems();
-        expenseItems.setItemPrice(2400d);
-        expenseItems.setItemName("iPhone 12 Pro");
-        expenseItems.setUserId(1);
-
-        executor.execute(()->{
-
-            DatabaseClient.getInstance(this).getAppDatabase().expensesDao().insertExpense(expenseItems);
-
-            for(ExpenseItemsWithUser items:DatabaseClient.getInstance(this).getAppDatabase().expensesDao().getExpenses(1)){
-
-                Log.e("Main Activity", "onCreate: " +items.toString());
-            }
-
-        });
-        executor.execute(() -> {
-
-
-            for (String date : DatabaseClient.getInstance(this).getAppDatabase().expensesDao().getExpensesDates()) {
-
-                Log.e("Main Activity", "onCreate: " + date);
-            }
-
-        });*/
+        myProfileIcon.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
 
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
+        item.setChecked(true);
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -98,27 +99,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void navigationDrawer(NavigationView navigationView) {
-
-        navigationView.setNavigationItemSelectedListener(
-                menuItem -> {
-                    selectDrawerItem(menuItem);
-                    return true;
-                });
-    }
-
-    private void selectDrawerItem(MenuItem menuItem) {
+    private void selectDrawerItem(int menuItemId, Date createdDate) {
 
 
         Fragment fragment = null;
-
-        switch (menuItem.getItemId()) {
+        switch (menuItemId) {
             case R.id.nav_home:
-                fragment = new HomeFragment();
-
+                if (createdDate == null)
+                    fragment = new HomeFragment();
+                else
+                    fragment = new HomeFragment(createdDate);
                 break;
             case R.id.nav_all_expenses:
-                fragment = new ExpensesFragment();
+                fragment = new ExpensesFragment(this);
 
                 break;
             case R.id.nav_settings:
@@ -136,18 +129,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-        menuItem.setChecked(true);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame_layout_main, fragment).commit();
 
         // Highlight the selected item has been done by NavigationView
 
-        // Set action bar title
-        setTitle(menuItem.getTitle());
         // Close the navigation drawer
         drawerLayout.closeDrawers();
 
     }
 
-
+    // Edit all expenses
+    @Override
+    public void onEdit(String createdDate) {
+        // Highlight the selected item by NavigationView
+        navigationView.getMenu().getItem(0).setChecked(true);
+        selectDrawerItem(R.id.nav_home, DateHelper.convertStringToDate(createdDate));
+    }
 }

@@ -12,18 +12,21 @@ import java.util.List;
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user")
-    List<User> getAll();
+    List<User> getAllUsers();
 
-    @Query("SELECT * FROM user WHERE id IN (:userIds)")
-    List<User> loadAllByIds(int[] userIds);
+    @Query("SELECT * FROM user WHERE id = :userId AND password=:password LIMIT 1")
+    User getUserByIdAndPassword(int userId, String password);
+
+    @Query("SELECT * FROM user WHERE id = :userId LIMIT 1")
+    User getUserById(int userId);
 
     @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
             "last_name LIKE :last LIMIT 1")
-    User findByName(String first, String last);
+    User getUserByName(String first, String last);
 
     @Insert
-    void insertAll(User... users);
+    void insertUser(User... users);
 
     @Delete
-    void delete(User user);
+    void deleteUser(User user);
 }

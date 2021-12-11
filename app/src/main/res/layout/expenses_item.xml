@@ -37,12 +37,14 @@
             android:text="$344" />
 
         <ImageView
+            android:id="@+id/editExp"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="12dp"
             android:src="@drawable/ic_edit" />
 
         <ImageView
+            android:id="@+id/delExp"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_bin" />
