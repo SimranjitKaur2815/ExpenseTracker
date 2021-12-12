@@ -50,7 +50,7 @@ public class ProfileOptionsAdapter extends RecyclerView.Adapter<ProfileOptionsAd
     private void manageOptionClick(String optionCode) {
         switch (optionCode) {
             case "MA":
-                ((Activity) context).startActivity(new Intent(context, LoginActivity.class));
+                ((Activity) context).startActivity(new Intent(context, LoginActivity.class).putExtra("fromProfile","Yes"));
                 break;
             case "CA":
                 Toast.makeText(context, optionCode, Toast.LENGTH_SHORT).show();
