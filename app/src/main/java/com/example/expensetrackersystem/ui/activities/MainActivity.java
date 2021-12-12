@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.ui.activities.login.LoginActivity;
@@ -22,7 +23,6 @@ import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesFragment;
 import com.example.expensetrackersystem.ui.fragments.expenses.ExpensesListener;
 import com.example.expensetrackersystem.ui.fragments.home.HomeFragment;
 
-import com.example.expensetrackersystem.ui.fragments.SettingsFragment;
 import com.example.expensetrackersystem.ui.fragments.StarredFragment;
 import com.example.expensetrackersystem.utils.DateHelper;
 import com.example.expensetrackersystem.utils.db.DbHelper;
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
 
     private static final String TAG = "MainActivity";
     DrawerLayout drawerLayout;
+    TextView toolbarTitle;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     ImageView navigationIcon, myProfileIcon;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
         myProfileIcon = findViewById(R.id.myProfileIcon);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
         navigationIcon = findViewById(R.id.navigationIcon);
+        toolbarTitle=findViewById(R.id.toolbarTitle);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -105,25 +107,32 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
         Fragment fragment = null;
         switch (menuItemId) {
             case R.id.nav_home:
-                if (createdDate == null)
+                if (createdDate == null){
+                    toolbarTitle.setText("Expense Tracker");
                     fragment = new HomeFragment();
+                }
                 else
+                {
+                    toolbarTitle.setText("Expense Tracker");
                     fragment = new HomeFragment(createdDate);
+                }
                 break;
             case R.id.nav_all_expenses:
+                toolbarTitle.setText("All Expenses");
                 fragment = new ExpensesFragment(this);
 
                 break;
-            case R.id.nav_settings:
-                fragment = new SettingsFragment();
-                break;
+
             case R.id.nav_about:
+                toolbarTitle.setText("About");
                 fragment = new AboutFragment();
                 break;
             case R.id.nav_starred:
+                toolbarTitle.setText("Starred");
                 fragment = new StarredFragment();
                 break;
             default:
+                toolbarTitle.setText("Expense Tracker");
                 fragment = new HomeFragment();
                 break;
 

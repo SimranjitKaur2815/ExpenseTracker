@@ -39,6 +39,27 @@ public class ProfileExpenseDetailAdapter extends RecyclerView.Adapter<ProfileExp
 
             holder.detailAmount.setText(model.getDetailAmount());
         }
+       double amount=Double.parseDouble(model.getDetailAmount());
+        if(amount>0 && amount<=99){
+            holder.detailAmount.setTextSize(18);
+        }
+        else if(amount>100 && amount<=999){
+            holder.detailAmount.setTextSize(16);
+        }
+        else if(amount>=1000 && amount<=9999)
+        {
+            holder.detailAmount.setTextSize(12);
+        }
+        else if(amount>=10000 && amount<=99999)
+        {
+            holder.detailAmount.setTextSize(10);
+        }
+        else if(amount>=100000 && amount<=999999){
+            holder.detailAmount.setTextSize(8);
+        }
+        else if(amount>=1000000){
+            holder.detailAmount.setTextSize(6);
+        }
 
         holder.detailAmount.setTextColor(context.getResources().getColor(model.getColorId()));
         holder.detailAmount.setBackgroundResource(model.getBgId());

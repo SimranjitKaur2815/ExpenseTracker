@@ -164,7 +164,7 @@ public class DbHelper {
         });
     }
 
-    public void deleteUser(Context context,UserDbListener.onDeleteAccountListener listener){
+    public void deleteUser(Context context, UserDbListener.onDeleteAccountListener listener) {
 //        CURRENT_USER(context,);
     }
 
@@ -301,14 +301,14 @@ public class DbHelper {
             public void onSuccess(User user) {
                 executor.execute(() -> {
                     ExpenseDetailModel expenseDetailModel = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpensesDetails(user.getId());
-                    listener.onSuccess(expenseDetailModel);
-                    // agar na hoya te
+                    ((Activity) context).runOnUiThread(() -> listener.onSuccess(expenseDetailModel));
+
                 });
             }
 
             @Override
             public void onFailure(String msg) {
-                listener.onFailure(msg);
+                ((Activity) context).runOnUiThread(() -> listener.onFailure(msg));
 
             }
         });

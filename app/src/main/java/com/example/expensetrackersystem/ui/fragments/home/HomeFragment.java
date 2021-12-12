@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +48,9 @@ public class HomeFragment extends Fragment {
     FloatingActionButton addExpenseBtn;
     String itemName = "", expenseDateString;
     Double itemPrice = 0.0d;
+    LinearLayout addLayoutDialog, updateLayoutDialog;
     TextInputEditText itemNameET, itemPriceET;
-    MaterialButton addExpenseMatBtn, updateExpenseMatBtn;
+    MaterialButton addExpenseMatBtn, updateExpenseMatBtn, cancelExpenseButton, cancelButton;
     BottomSheetDialog bottomSheetDialog;
     Executor executor;
     TextView expenseDayTV, expenseDateTV;
@@ -95,7 +97,11 @@ public class HomeFragment extends Fragment {
         expenseRecyc.setLayoutManager(new LinearLayoutManager(context));
         bottomSheetView = LayoutInflater.from(context).inflate(R.layout.add_expense_bottom_sheet, null, false);
         itemNameET = bottomSheetView.findViewById(R.id.itemName);
+        addLayoutDialog = bottomSheetView.findViewById(R.id.addLayout);
+        updateLayoutDialog = bottomSheetView.findViewById(R.id.updateLayout);
         itemPriceET = bottomSheetView.findViewById(R.id.itemPrice);
+        cancelButton = bottomSheetView.findViewById(R.id.cancelButton);
+        cancelExpenseButton = bottomSheetView.findViewById(R.id.cancelExpenseButton);
         addExpenseMatBtn = bottomSheetView.findViewById(R.id.addExpenseBtn);
         updateExpenseMatBtn = bottomSheetView.findViewById(R.id.updateExpenseMatBtn);
         bottomSheetDialog = new BottomSheetDialog(context, R.style.CustomShapeAppearanceBottomSheetDialog);
@@ -121,8 +127,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void initListeners() {
+        cancelExpenseButton.setOnClickListener(v ->bottomSheetDialog.dismiss());
+        cancelButton.setOnClickListener(v -> bottomSheetDialog.dismiss());
+
         addExpenseBtn.setOnClickListener(v -> {
             bottomSheetDialog.show();
+            addLayoutDialog.setVisibility(View.VISIBLE);
+            updateLayoutDialog.setVisibility(View.GONE);
         });
         addExpenseMatBtn.setOnClickListener(v -> {
             itemName = itemNameET.getText().toString().trim();
@@ -155,8 +166,8 @@ public class HomeFragment extends Fragment {
 
 
     private void getExpenses() {
-        addExpenseMatBtn.setVisibility(View.VISIBLE);
-        updateExpenseMatBtn.setVisibility(View.GONE);
+        addLayoutDialog.setVisibility(View.VISIBLE);
+        updateLayoutDialog.setVisibility(View.GONE);
         DbHelper.getInstance().getExpenses(context, user.getId(), expenseDateString, new ExpenseDbListener.onGetExpensesListener() {
             @Override
             public void onSuccess(List<ExpenseItems> items) {
@@ -164,8 +175,8 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onEdit(ExpenseItems expenseItems) {
                         updatedExpenseItem = expenseItems;
-                        addExpenseMatBtn.setVisibility(View.GONE);
-                        updateExpenseMatBtn.setVisibility(View.VISIBLE);
+                        addLayoutDialog.setVisibility(View.GONE);
+                        updateLayoutDialog.setVisibility(View.VISIBLE);
                         itemNameET.setText(expenseItems.getItemName());
                         itemPriceET.setText(String.valueOf(expenseItems.getItemPrice()));
                         bottomSheetDialog.show();

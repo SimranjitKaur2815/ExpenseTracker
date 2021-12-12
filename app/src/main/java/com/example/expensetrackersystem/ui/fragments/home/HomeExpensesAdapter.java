@@ -38,7 +38,7 @@ public class HomeExpensesAdapter extends RecyclerView.Adapter<HomeExpensesAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExpenseItems expenseItem = expenseItemsList.get(position);
         holder.itemName.setText(expenseItem.getItemName());
-        holder.itemPrice.setText(String.valueOf(expenseItem.getItemPrice()));
+        holder.itemPrice.setText("$"+String.valueOf(expenseItem.getItemPrice()));
         holder.editExp.setOnClickListener(v ->listener.onEdit(expenseItem));
         holder.delExp.setOnClickListener(v ->listener.onDelete(expenseItem));
 

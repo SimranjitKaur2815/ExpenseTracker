@@ -8,11 +8,16 @@
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/about_fragment_layout.xml" value="0.1" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/activity_custom_splash_screen.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/activity_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/activity_sign_up.xml" value="0.17760416666666667" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/add_expense_bottom_sheet.xml" value="0.17760416666666667" />
+        <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/all_expenses_sub_item.xml" value="0.67" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/expenses_adapter.xml" value="0.25" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/expenses_fragment_layout.xml" value="0.1" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/expenses_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/home_fragment_layout.xml" value="0.1" />
+        <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/profile_expense_details_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/settings_fragment_layout.xml" value="0.1" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/starred_fragment_layout.xml" value="0.1" />
         <entry key="..\:/Users/Simmi/AndroidStudioProjects/ExpenseTrackerSystem/app/src/main/res/layout/toolbar.xml" value="0.33" />

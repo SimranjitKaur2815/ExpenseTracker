@@ -92,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void onUserDelete(User user) {
-                            DbHelper.getInstance().
                         }
                     }));
 
