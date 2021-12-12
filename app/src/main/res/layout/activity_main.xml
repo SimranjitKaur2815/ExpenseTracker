@@ -52,13 +52,15 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <ImageView
+
+                <TextView
                     android:id="@+id/myProfileIcon"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_user_profile"
-
-                    />
+                    android:background="@drawable/circle_blue_bg"
+                    android:gravity="center"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -8,12 +8,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.expensetrackersystem.R;
+import com.example.expensetrackersystem.database.entities.User;
 import com.example.expensetrackersystem.ui.activities.login.LoginActivity;
 import com.example.expensetrackersystem.ui.activities.profile.ProfileActivity;
 import com.example.expensetrackersystem.ui.fragments.AboutFragment;
@@ -30,6 +34,7 @@ import com.example.expensetrackersystem.utils.db.UserDbListener;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements ExpensesListener.AllExpenseListener {
 
@@ -37,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    ImageView navigationIcon, myProfileIcon;
+    ImageView navigationIcon;
+    TextView myProfileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,19 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
             @Override
             public void onSuccess() {
                 init();
+                DbHelper.getInstance().getCurrentUser(MainActivity.this, new UserDbListener.onGetCurrentUserListener() {
+                    @Override
+                    public void onSuccess(User user) {
+                            myProfileIcon.setText(user.getFirstName().substring(0,1).toUpperCase(Locale.ROOT));
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        Toast.makeText(MainActivity.this, "User not logged in.", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        finishAffinity();
+                    }
+                });
             }
 
             @Override
