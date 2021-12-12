@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:id="@+id/toolbarTitle"
                     android:text="Expense Tracker"
                     android:textSize="16sp"
                     android:textStyle="bold" />

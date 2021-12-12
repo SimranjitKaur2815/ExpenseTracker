@@ -102,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<User> users) {
 
+
                 usersRecyc.setAdapter(new LoginAdapter(LoginActivity.this, users, new LoginInterface() {
                     @Override
                     public void onUserClick(User user) {

@@ -22,9 +22,6 @@
         android:id="@+id/nav_starred"
         android:title="Starred"
         android:icon="@drawable/ic_starred"/>
-    <item
-        android:id="@+id/nav_settings"
-        android:title="Settings"
-        android:icon="@drawable/ic_settings"/>
+
     </group>
 </menu>
