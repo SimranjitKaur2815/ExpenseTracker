@@ -21,5 +21,9 @@ public interface UserDbListener {
     interface onDeleteAccountListener{
          void onSuccess();
          void onFailure(String msg);
+         void onPasswordRequired(onPasswordRequiredListener listener);
+    }
+    interface onPasswordRequiredListener{
+         void onSuccess();
     }
 }

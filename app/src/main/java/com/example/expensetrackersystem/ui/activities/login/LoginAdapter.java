@@ -35,11 +35,12 @@ public class LoginAdapter extends RecyclerView.Adapter<LoginAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.user.setText(users.get(position).getFirstName() + " " + users.get(position).getLastName());
+        User user = users.get(position);
+        holder.user.setText(user.getFirstName() + " " + user.getLastName());
         holder.user.setOnClickListener(v -> {
-            listener.onUserClick(users.get(position));
+            listener.onUserClick(user);
         });
-        holder.removeAcc.setOnClickListener(v -> listener.onUserDelete(users.get(position)));
+        holder.removeAcc.setOnClickListener(v -> listener.onUserDelete(user));
     }
 
     @Override

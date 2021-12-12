@@ -55,6 +55,23 @@ public class DbHelper {
 
     /* --------- USER -----------*/
 
+    public void authenticatePassword(Context context, User user, String password, UserDbListener.onAuthListener listener) {
+        executor.execute(() -> {
+            try {
+                String encPassword = AESCrypt.encrypt(password, password);
+                if (user.getPassword().equals(encPassword)) {
+                    ((Activity) context).runOnUiThread(listener::onSuccess);
+                } else {
+                    ((Activity) context).runOnUiThread(() -> listener.onFailure("Invalid Password"));
+                }
+
+            } catch (GeneralSecurityException e) {
+                ((Activity) context).runOnUiThread(() -> listener.onFailure(e.getLocalizedMessage()));
+
+            }
+        });
+    }
+
     public void registerUser(Context context, User user, UserDbListener.onAuthListener listener) {
         executor.execute(() -> {
             User getUser = DatabaseClient.getInstance(context).getAppDatabase().userDao().getUserByName(user.getFirstName(), user.getLastName());
@@ -164,8 +181,38 @@ public class DbHelper {
         });
     }
 
-    public void deleteUser(Context context,UserDbListener.onDeleteAccountListener listener){
-//        CURRENT_USER(context,);
+    public void deleteUser(Context context, User deleteUser, UserDbListener.onDeleteAccountListener listener) {
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
+            @Override
+            public void onSuccess(User user) {
+                if (user.getId() == deleteUser.getId()) {
+                    logoutUser(true, context, new UserDbListener.onAuthListener() {
+                        @Override
+                        public void onSuccess() {
+                            DatabaseClient.getInstance(context).getAppDatabase().userDao().deleteUser(deleteUser);
+                            ((Activity) context).runOnUiThread(listener::onSuccess);
+                        }
+
+                        @Override
+                        public void onFailure(String msg) {
+                            ((Activity) context).runOnUiThread(() -> listener.onFailure(msg));
+                        }
+                    });
+                } else {
+                    listener.onPasswordRequired(() -> {
+                        executor.execute(() -> {
+                            DatabaseClient.getInstance(context).getAppDatabase().userDao().deleteUser(deleteUser);
+                        });
+                        listener.onSuccess();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                listener.onFailure(msg);
+            }
+        });
     }
 
 

@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
                 dobCal.set(Calendar.MONTH, month);
                 dobCal.set(Calendar.DAY_OF_MONTH, day);
                 dob = dobCal.getTime();
-                Log.e("TAG", "initListeners: "+dob );
+                Log.e("TAG", "initListeners: " + dob);
                 dobEt.setText(DateHelper.getProcessedDate(year, month, day));
             }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
             DatePicker datePicker = datePickerDialog.getDatePicker();
@@ -83,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(String msg) {
-                        runOnUiThread(() -> Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show());
+                        Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (GeneralSecurityException e) {
