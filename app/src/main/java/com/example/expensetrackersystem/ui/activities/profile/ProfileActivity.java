@@ -1,5 +1,6 @@
 package com.example.expensetrackersystem.ui.activities.profile;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +10,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,14 +31,14 @@ import com.example.expensetrackersystem.utils.db.UserDbListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements onProfileChangesListener {
     private static final String TAG = "ProfileActivity";
     private ImageView backBtn;
     private List<ProfileOptionsModel> modelList = new ArrayList<>();
     private List<ProfileExpensesDetailModel> expensesDetailModelList = new ArrayList<>();
     private RecyclerView profileOptionsRV, expenseDetailRV;
     private User currentUser;
-    private TextView userName;
+    private TextView userName, myProfileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setProfileOptions() {
         modelList.add(new ProfileOptionsModel(R.drawable.ic_user_profile, "Manage Account", "MA"));
-        modelList.add(new ProfileOptionsModel(R.drawable.ic_user_profile, "Change Avatar", "CA"));
         modelList.add(new ProfileOptionsModel(R.drawable.ic_user_profile, "Change Username", "CU"));
         modelList.add(new ProfileOptionsModel(R.drawable.ic_user_profile, "Change Password", "CP"));
     }
@@ -64,13 +68,14 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void initElements() {
+        myProfileIcon = findViewById(R.id.myProfileIcon);
         userName = findViewById(R.id.userName);
         backBtn = findViewById(R.id.backBtn);
         profileOptionsRV = findViewById(R.id.profileOptionsRV);
         expenseDetailRV = findViewById(R.id.expenseDetailRV);
         expenseDetailRV.setLayoutManager(new GridLayoutManager(this, 2));
         profileOptionsRV.setLayoutManager(new LinearLayoutManager(this));
-        profileOptionsRV.setAdapter(new ProfileOptionsAdapter(this, modelList));
+        profileOptionsRV.setAdapter(new ProfileOptionsAdapter(this, modelList, this));
         DbHelper.getInstance().getExpenseDetails(this, new ExpenseDbListener.onGetExpenseDetailsListener() {
             @Override
             public void onSuccess(ExpenseDetailModel expenseDetailModel) {
@@ -87,6 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onSuccess(User user) {
                 currentUser = user;
                 userName.setText(user.getFirstName() + " " + user.getLastName());
+                myProfileIcon.setText(user.getFirstName().substring(0, 1).toUpperCase());
             }
 
             @Override
@@ -100,5 +106,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void initListeners() {
         backBtn.setOnClickListener(v -> finish());
+    }
+
+    @Override
+    public void onUsernameChange() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Change Username");
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.change_username_dia_lay, null, false);
+        builder.setView(dialogView);
+        EditText usernameET = dialogView.findViewById(R.id.usernameET);
+        EditText passEt = dialogView.findViewById(R.id.passwordET);
+        Button changeUsernameBtn = dialogView.findViewById(R.id.changeUsernameBtn);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 }

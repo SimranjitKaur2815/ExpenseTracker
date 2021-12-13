@@ -56,8 +56,8 @@
 
                 <TextView
                     android:id="@+id/myProfileIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/circle_blue_bg"
                     android:gravity="center"
                     android:textColor="@color/blue"
