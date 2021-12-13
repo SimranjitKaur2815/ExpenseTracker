@@ -4,7 +4,7 @@ public class ProfileExpensesDetailModel {
     String detailCode, detailName, detailAmount;
     int colorId, bgId;
 
-
+//parameterized constructor
     public ProfileExpensesDetailModel(String detailCode, String detailName, String detailAmount, int colorId, int bgId) {
         this.detailCode = detailCode;
         this.detailName = detailName;
@@ -13,6 +13,7 @@ public class ProfileExpensesDetailModel {
         this.bgId = bgId;
     }
 
+    //getter and setter for detailCode, detailName, detailAmount, colorId,bgId starts here
     public String getDetailCode() {
         return detailCode;
     }
@@ -52,4 +53,5 @@ public class ProfileExpensesDetailModel {
     public void setBgId(int bgId) {
         this.bgId = bgId;
     }
+    //getter and setter for detailCode, detailName, detailAmount, colorId,bgId ends here
 }

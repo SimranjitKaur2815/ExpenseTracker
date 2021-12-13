@@ -38,6 +38,7 @@
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/light_orange"
             android:text="Login"
+            android:textStyle="bold"
             android:textColor="@color/text_orange" />
 
     </LinearLayout>

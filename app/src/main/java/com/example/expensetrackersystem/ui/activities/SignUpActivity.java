@@ -17,6 +17,7 @@ import com.example.expensetrackersystem.ui.activities.login.LoginActivity;
 import com.example.expensetrackersystem.utils.DateHelper;
 import com.example.expensetrackersystem.utils.db.DbHelper;
 import com.example.expensetrackersystem.utils.db.UserDbListener;
+import com.google.android.material.button.MaterialButton;
 import com.scottyab.aescrypt.AESCrypt;
 
 import java.security.GeneralSecurityException;
@@ -26,7 +27,7 @@ import java.util.Date;
 public class SignUpActivity extends AppCompatActivity {
 
     EditText firstNameEt, lastNameEt, dobEt, passwordEt;
-    Button submit;
+    MaterialButton submit;
     Date dob;
 
     @Override

@@ -1,30 +1,37 @@
 package com.example.expensetrackersystem.models;
 
 public class ExpenseDetailModel {
-    int tot_expenses;
-    double tot_price;
+    int total_expenses;
+    double total_price;
 
-    public int getTot_expenses() {
-        return tot_expenses;
+    /* getter and setter for total_expenses starts here*/
+    public int getTotal_expenses() {
+        return total_expenses;
     }
 
-    public void setTot_expenses(int tot_expenses) {
-        this.tot_expenses = tot_expenses;
+    public void setTotal_expenses(int total_expenses) {
+        this.total_expenses = total_expenses;
+    }
+    /* getter and setter for total_expenses ends here*/
+
+
+    /* getter and setter for total_price starts here*/
+    public double getTotal_price() {
+        return total_price;
     }
 
-    public double getTot_price() {
-        return tot_price;
+    public void setTotal_price(double total_price) {
+        this.total_price = total_price;
     }
 
-    public void setTot_price(double tot_price) {
-        this.tot_price = tot_price;
-    }
+    /* getter and setter for total_price ends here*/
 
+    /* toString method returns textual representation of Expenses Model*/
     @Override
     public String toString() {
         return "ExpenseDetailModel{" +
-                "tot_expenses=" + tot_expenses +
-                ", tot_price=" + tot_price +
+                "tot_expenses=" + total_expenses +
+                ", tot_price=" + total_price +
                 '}';
     }
 }

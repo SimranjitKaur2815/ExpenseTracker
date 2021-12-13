@@ -20,7 +20,7 @@ public interface ExpensesDao {
     @Query("SELECT * FROM expenseItems WHERE user_id=:userId AND created_date=:createdDate")
     List<ExpenseItems> getExpenses(int userId, String createdDate);
 
-    @Query("SELECT COUNT(*) as tot_expenses, SUM(item_price) as tot_price FROM expenseItems WHERE user_id = :user_id")
+    @Query("SELECT COUNT(*) as total_expenses, SUM(item_price) as total_price FROM expenseItems WHERE user_id = :user_id")
     ExpenseDetailModel getExpensesDetails(int user_id);
 
     @Query("SELECT DISTINCT created_date FROM expenseItems")

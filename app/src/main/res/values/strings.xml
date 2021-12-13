@@ -2,4 +2,9 @@
     <string name="app_name">ExpenseTrackerSystem</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="about_information">People usually spent alot money and do not keep record of what things they have spent their money on!
+So, this android application helps users to manage and calculate their expenses on daily basis and keep an eye on them.
+It offers users to register themselves first, then login from their respective registered accounts, and can manage the accounts.Expenses are calculated with the specific date and days. Users can have access to all the expenses of the week, month or year, if
+they make use of this application.
+</string>
 </resources>

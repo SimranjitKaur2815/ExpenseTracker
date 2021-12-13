@@ -10,6 +10,7 @@ public class ProfileOptionsModel {
         this.optionCode = optionCode;
     }
 
+    //getter and setter for optionDrawableId, optionName, optionCode starts here
     public int getOptionDrawableId() {
         return optionDrawableId;
     }
@@ -33,4 +34,5 @@ public class ProfileOptionsModel {
     public void setOptionCode(String optionCode) {
         this.optionCode = optionCode;
     }
+    //getter and setter for optionDrawableId, optionName, optionCode ends here
 }

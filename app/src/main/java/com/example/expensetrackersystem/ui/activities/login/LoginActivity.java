@@ -44,9 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init() {
-        initElements();
-        initListeners();
-        getRegisteredUsers();
+        initElements();//initializing the xml elements with their respective IDs.
+        initListeners();//setting listeners on the xml elements
+        getRegisteredUsers();//getting registered users
     }
 
 

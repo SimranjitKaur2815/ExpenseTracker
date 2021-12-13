@@ -23,5 +23,10 @@
         android:title="Starred"
         android:icon="@drawable/ic_starred"/>
 
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout"
+            android:icon="@drawable/ic_logout"/>
+
     </group>
 </menu>

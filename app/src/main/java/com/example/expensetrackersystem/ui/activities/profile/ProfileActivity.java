@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,15 +49,14 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void setProfileOptions() {
-        modelList.add(new ProfileOptionsModel(R.drawable.ic_user_profile, "Manage Account", "MA"));
-        modelList.add(new ProfileOptionsModel(R.drawable.ic_user_profile, "Change Avatar", "CA"));
-        modelList.add(new ProfileOptionsModel(R.drawable.ic_user_profile, "Change Username", "CU"));
-        modelList.add(new ProfileOptionsModel(R.drawable.ic_user_profile, "Change Password", "CP"));
+        modelList.add(new ProfileOptionsModel(R.drawable.ic_manage_account, "Manage Account", "MA"));
+        modelList.add(new ProfileOptionsModel(R.drawable.ic_change_username, "Change Username", "CU"));
+        modelList.add(new ProfileOptionsModel(R.drawable.ic_change_password, "Change Password", "CP"));
     }
 
     private void setExpenseDetails(ExpenseDetailModel model) {
-        expensesDetailModelList.add(new ProfileExpensesDetailModel("TE", "Expenses", String.valueOf(model.getTot_expenses()), R.color.blue, R.drawable.circle_blue_bg));
-        expensesDetailModelList.add(new ProfileExpensesDetailModel("TEA", "Amount", String.valueOf(model.getTot_price()), R.color.red, R.drawable.circle_red_bg));
+        expensesDetailModelList.add(new ProfileExpensesDetailModel("TE", "Expenses", String.valueOf(model.getTotal_expenses()), R.color.blue, R.drawable.circle_blue_bg));
+        expensesDetailModelList.add(new ProfileExpensesDetailModel("TEA", "Amount", String.valueOf(model.getTotal_price()), R.color.red, R.drawable.circle_red_bg));
         expenseDetailRV.setAdapter(new ProfileExpenseDetailAdapter(this, expensesDetailModelList));
     }
 

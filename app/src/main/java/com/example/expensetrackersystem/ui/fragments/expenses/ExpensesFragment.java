@@ -64,13 +64,15 @@ public class ExpensesFragment extends Fragment {
 
     private void initElements() {
         expenses_rv = view.findViewById(R.id.expenses_rv);
-        expenses_rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         expenseDialog = new AlertDialog.Builder(context, R.style.CustomDialog);
 
     }
 
 
     private void getAllExpenses() {
+
+        expenses_rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        expenses_rv.setAdapter(null);
         DbHelper.getInstance().getAllExpenses(context, new ExpenseDbListener.onGetAllExpenseListener() {
             @Override
             public void onSuccess(List<ExpensesModel> expensesModelList) {

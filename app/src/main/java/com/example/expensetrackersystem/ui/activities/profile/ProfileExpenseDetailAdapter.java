@@ -48,17 +48,17 @@ public class ProfileExpenseDetailAdapter extends RecyclerView.Adapter<ProfileExp
         }
         else if(amount>=1000 && amount<=9999)
         {
-            holder.detailAmount.setTextSize(12);
+            holder.detailAmount.setTextSize(14);
         }
         else if(amount>=10000 && amount<=99999)
         {
-            holder.detailAmount.setTextSize(10);
+            holder.detailAmount.setTextSize(12);
         }
         else if(amount>=100000 && amount<=999999){
-            holder.detailAmount.setTextSize(8);
+            holder.detailAmount.setTextSize(10);
         }
         else if(amount>=1000000){
-            holder.detailAmount.setTextSize(6);
+            holder.detailAmount.setTextSize(8);
         }
 
         holder.detailAmount.setTextColor(context.getResources().getColor(model.getColorId()));

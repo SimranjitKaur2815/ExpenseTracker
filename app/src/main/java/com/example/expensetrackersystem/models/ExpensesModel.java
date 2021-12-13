@@ -10,6 +10,7 @@ public class ExpensesModel {
     private String submittedDate;
     private Double totalPrice;
 
+    /* getter and setter for total price starts here*/
     public Double getTotalPrice() {
         return totalPrice;
     }
@@ -17,7 +18,9 @@ public class ExpensesModel {
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
+    /* getter and setter for total price ends here*/
 
+    /* getter and setter for List of expense items starts here*/
     public List<ExpenseItems> getExpenseItems() {
         return expenseItems;
     }
@@ -25,7 +28,9 @@ public class ExpensesModel {
     public void setExpenseItems(List<ExpenseItems> expenseItems) {
         this.expenseItems = expenseItems;
     }
+    /* getter and setter for List of expense items ends here*/
 
+    /* getter and setter for submit date starts here*/
     public String getSubmittedDate() {
         return submittedDate;
     }
@@ -33,7 +38,9 @@ public class ExpensesModel {
     public void setSubmittedDate(String submittedDate) {
         this.submittedDate = submittedDate;
     }
+    /* getter and setter for submit date ends here*/
 
+    /* toString method returns textual representation of Expenses Model*/
     @Override
     public String toString() {
         return "ExpensesModel{" +

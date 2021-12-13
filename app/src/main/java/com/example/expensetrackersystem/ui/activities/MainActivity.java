@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -34,6 +36,15 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Date;
 import java.util.Locale;
+
+
+//TODO : profile option's icon change
+//TODO: signup ui
+//TODO: commenting
+//TODO: app icon
+//TODO: login ui
+//TODO: about info
+
 
 public class MainActivity extends AppCompatActivity implements ExpensesListener.AllExpenseListener {
 
@@ -149,6 +160,31 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
                 toolbarTitle.setText("Starred");
                 fragment = new StarredFragment();
                 break;
+            case R.id.nav_logout:
+                AlertDialog.Builder logoutBuilder=new AlertDialog.Builder(this);
+                logoutBuilder.setTitle("Logout Confirmation");
+                logoutBuilder.setMessage("Are you sure, you want to logout?");
+                logoutBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DbHelper.getInstance().logoutUser(false, MainActivity.this, new UserDbListener.onAuthListener() {
+                            @Override
+                            public void onSuccess() {
+                                startActivity(new Intent(MainActivity.this,LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                finishAffinity();
+                            }
+
+                            @Override
+                            public void onFailure(String msg) {
+                                Toast.makeText(MainActivity.this,msg,Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+                logoutBuilder.setNegativeButton("Cancel",null);
+                logoutBuilder.create().show();
+
+                break;
             default:
                 toolbarTitle.setText("Expense Tracker");
                 fragment = new HomeFragment();
@@ -156,8 +192,11 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener.
 
 
         }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_layout_main, fragment).commit();
+        if(fragment!=null){
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, fragment).commit();
+        }
 
         // Highlight the selected item has been done by NavigationView
 

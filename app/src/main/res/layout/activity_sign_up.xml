@@ -1,41 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activities.SignUpActivity">
+    tools:context=".ui.activities.SignUpActivity"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="SignUp"
+    android:textColor="@color/text_orange"
+    android:textStyle="bold"
+    android:textSize="24sp"
+    android:gravity="center"
+    android:padding="16dp"/>
 
-    <EditText
-        android:id="@+id/firstName"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First name" />
+        android:hint="First Name"
+        app:boxBackgroundColor="@color/white"
+        android:layout_margin="10dp">
 
-    <EditText
-        android:id="@+id/lastName"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/firstName"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Last name" />
+        android:hint="Last Name"
 
-    <EditText
-        android:id="@+id/dob"
+        app:boxBackgroundColor="@color/white"
+        android:layout_margin="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lastName"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="false"
-        android:hint="D.O.B" />
+        android:hint="D.O.B"
 
-    <EditText
-        android:id="@+id/password"
+        app:boxBackgroundColor="@color/white"
+        android:layout_margin="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:id="@+id/dob"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password" />
+        android:hint="Password"
 
-    <Button
+        app:boxBackgroundColor="@color/white"
+        android:layout_margin="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:id="@+id/password"
+            android:inputType="textPassword"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/submit"
+        android:backgroundTint="@color/light_orange"
+        android:textColor="@color/text_orange"
         android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="30dp"
+        android:textSize="18sp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/text_orange"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:text="Submit" />
-</LinearLayout>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/sign_up_img"
+        android:alpha="0.7"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
