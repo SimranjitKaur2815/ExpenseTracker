@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.expensetrackersystem.database.entities.User;
 
@@ -24,8 +25,11 @@ public interface UserDao {
             "last_name LIKE :last LIMIT 1")
     User getUserByName(String first, String last);
 
+    @Update
+    void updateUser(User user);
+
     @Insert
-    void insertUser(User... users);
+    void insertUser(User... users);//(... means)multiple insertion of users, for ex insertUser(user1,user2,user3,....)
 
     @Delete
     void deleteUser(User user);

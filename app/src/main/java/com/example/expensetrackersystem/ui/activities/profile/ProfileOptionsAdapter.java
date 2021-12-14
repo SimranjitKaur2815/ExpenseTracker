@@ -22,10 +22,12 @@ import java.util.List;
 public class ProfileOptionsAdapter extends RecyclerView.Adapter<ProfileOptionsAdapter.ViewHolder> {
     Context context;
     List<ProfileOptionsModel> list;
+    onProfileChangesListener listener;
 
-    public ProfileOptionsAdapter(Context context, List<ProfileOptionsModel> list) {
+    public ProfileOptionsAdapter(Context context, List<ProfileOptionsModel> list, onProfileChangesListener listener) {
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
     @NonNull
@@ -50,15 +52,13 @@ public class ProfileOptionsAdapter extends RecyclerView.Adapter<ProfileOptionsAd
     private void manageOptionClick(String optionCode) {
         switch (optionCode) {
             case "MA":
-                ((Activity) context).startActivity(new Intent(context, LoginActivity.class).putExtra("fromProfile","Yes"));
-                break;
-            case "CA":
-                Toast.makeText(context, optionCode, Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, LoginActivity.class).putExtra("fromProfile", "Yes"));
                 break;
             case "CU":
-                Toast.makeText(context, optionCode, Toast.LENGTH_SHORT).show();
+                listener.onUsernameChange();
                 break;
             case "CP":
+                listener.onPasswordChange();
                 Toast.makeText(context, optionCode, Toast.LENGTH_SHORT).show();
                 break;
             default:

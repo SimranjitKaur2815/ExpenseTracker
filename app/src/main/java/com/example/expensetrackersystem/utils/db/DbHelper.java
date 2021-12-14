@@ -133,7 +133,6 @@ public class DbHelper {
         });
     }
 
-
     public void getAllUsers(Context context, UserDbListener.onGetUsersListener listener) {
         executor.execute(() -> {
             List<User> users = DatabaseClient.getInstance(context).getAppDatabase().userDao().getAllUsers();
@@ -181,7 +180,6 @@ public class DbHelper {
         });
     }
 
-
     public void deleteUser(Context context, User deleteUser, UserDbListener.onDeleteAccountListener listener) {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
@@ -215,6 +213,75 @@ public class DbHelper {
             }
         });
 
+    }
+
+    public void updateUsername(Context context, String newFirstname,String newLastname, String password, UserDbListener.onAuthListener listener) {
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
+            @Override
+            public void onSuccess(User user) {
+                try {
+                    String encryptPassword=AESCrypt.encrypt(password,password);
+                    if(user.getPassword().equals(encryptPassword)){
+                        //Proceed updating username
+                        user.setFirstName(newFirstname);
+                        user.setLastName(newLastname);
+                        executor.execute(()->{
+                            DatabaseClient.getInstance(context).getAppDatabase().userDao().updateUser(user);
+                        });
+                        listener.onSuccess();
+
+                    }
+                    else
+                    {
+                        listener.onFailure("Invalid password");
+                    }
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                    listener.onFailure(e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                listener.onFailure(msg);
+            }
+        });
+    }
+
+    public void updatePassword(Context context, String oldPassword, String newPassword, UserDbListener.onAuthListener listener){
+        CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
+            @Override
+            public void onSuccess(User user) {
+                try {
+                    String encryptPassword=AESCrypt.encrypt(oldPassword,oldPassword);
+                    String encryptNewPassword=AESCrypt.encrypt(newPassword,newPassword);
+
+                    if(user.getPassword().equals(encryptPassword)){
+                        //Proceed updating username
+                        user.setPassword(encryptNewPassword);
+                        executor.execute(()->{
+                            DatabaseClient.getInstance(context).getAppDatabase().userDao().updateUser(user);
+                        });
+                        listener.onSuccess();
+
+                    }
+                    else
+                    {
+                        listener.onFailure("Invalid old password");
+                    }
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                    listener.onFailure(e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
     }
 
 

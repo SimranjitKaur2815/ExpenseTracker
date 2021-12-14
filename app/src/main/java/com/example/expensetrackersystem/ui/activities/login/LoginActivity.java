@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.expensetrackersystem.R;
@@ -22,6 +23,7 @@ import com.example.expensetrackersystem.ui.activities.MainActivity;
 import com.example.expensetrackersystem.ui.activities.SignUpActivity;
 import com.example.expensetrackersystem.utils.db.DbHelper;
 import com.example.expensetrackersystem.utils.db.UserDbListener;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
 
@@ -51,14 +53,19 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void initElements() {
-        isFromProfile = getIntent().getStringExtra("fromProfile") != null && !TextUtils.isEmpty(getIntent().getStringExtra("fromProfile"));
+        isFromProfile = getIntent().
+                getStringExtra("fromProfile") != null && !TextUtils.isEmpty(getIntent().
+                getStringExtra("fromProfile"));
         passLay = findViewById(R.id.passLay);
         backBtn = findViewById(R.id.backButton);
         addUserBtn = findViewById(R.id.addUserBtn);
-        if (isFromProfile) {
+        if (isFromProfile)
+        {
             backBtn.setVisibility(View.VISIBLE);
             addUserBtn.setVisibility(View.VISIBLE);
-        } else {
+        }
+        else
+        {
             backBtn.setVisibility(View.GONE);
             addUserBtn.setVisibility(View.GONE);
         }
@@ -67,12 +74,14 @@ public class LoginActivity extends AppCompatActivity {
         passBackBtn = findViewById(R.id.backBtn);
         usersRecyc = findViewById(R.id.usersRecyc);
         submit = findViewById(R.id.submit);
+        //setting linear layout to the recycler view
         usersRecyc.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initListeners() {
-        backBtn.setOnClickListener(v -> finish());
+        backBtn.setOnClickListener(v -> finish());//this listener helps user to get back from the current activity
         addUserBtn.setOnClickListener(v -> {
+            //this listener helps to register a new user to the application with the help of intent
             startActivity(new Intent(this, SignUpActivity.class));
             finish();
         });
@@ -82,30 +91,37 @@ public class LoginActivity extends AppCompatActivity {
             usersLay.setVisibility(View.VISIBLE);
         });
         submit.setOnClickListener(v -> {
+            //getting instance of DBHelper class which will authenticate the current user with the appropriate credentials
             DbHelper.getInstance().loginUser(this, user.getId(), password.getText().toString(), new UserDbListener.onAuthListener() {
                 @Override
                 public void onSuccess() {
+                    //if the authentication gets successful user will redirect to the main activity
                     startActivity(new Intent(LoginActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    //by clicking back, application closes
                     finishAffinity();
                 }
 
                 @Override
                 public void onFailure(String msg) {
+                    //if the authentication fails user will get a toast as a warning
                     Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }
             });
         });
     }
 
+    //method to get all the registered users
     private void getRegisteredUsers() {
+        //getting instance of DBHelper class which will help application to get all the users with the appropriate names
         DbHelper.getInstance().getAllUsers(this, new UserDbListener.onGetUsersListener() {
             @Override
             public void onSuccess(List<User> users) {
-
-
+                //if above request gets successful, LoginAdapter would be set on the user recyclerView which returns the list of users
                 usersRecyc.setAdapter(new LoginAdapter(LoginActivity.this, users, new LoginInterface() {
                     @Override
-                    public void onUserClick(User user) {
+                    public void onUserClick(User user)
+                    {
+                        //onUserClick password layout gone to be visible and user will be initialized
                         LoginActivity.this.user = user;
                         passLay.setVisibility(View.VISIBLE);
                         usersLay.setVisibility(View.GONE);
@@ -133,9 +149,9 @@ public class LoginActivity extends AppCompatActivity {
                                 builder.setView(diaView);
                                 AlertDialog dialog = builder.create();
                                 Button deleteBtn = diaView.findViewById(R.id.deleteBtn);
-                                EditText pass = diaView.findViewById(R.id.diaPassET);
-                                dialog.setTitle("Authentication");
-                                dialog.setMessage("As this is not your account, so password will be required.");
+                                TextView authenticationMessage=diaView.findViewById(R.id.authenticationMessage);
+                                TextInputEditText pass = diaView.findViewById(R.id.diaPassET);
+                                authenticationMessage.setText("As this is not your account, so password will be required.");
 
                                 deleteBtn.setOnClickListener(v -> {
                                     if (TextUtils.isEmpty(pass.getText().toString())) {

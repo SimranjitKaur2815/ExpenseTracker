@@ -38,12 +38,8 @@ import java.util.Date;
 import java.util.Locale;
 
 
-//TODO : profile option's icon change
-//TODO: signup ui
 //TODO: commenting
-//TODO: app icon
-//TODO: login ui
-//TODO: about info
+//TODO: Hide/unhide pass in every passfield
 
 
 public class MainActivity extends AppCompatActivity implements ExpensesListener.AllExpenseListener {
