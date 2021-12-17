@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-//Singleton Databaseclient class
+//Singleton DatabaseClient class
 public class DatabaseClient {
     private Context mCtx;
     private static DatabaseClient mInstance;
