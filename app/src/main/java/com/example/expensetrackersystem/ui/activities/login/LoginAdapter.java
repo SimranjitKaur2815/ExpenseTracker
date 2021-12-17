@@ -21,15 +21,17 @@ public class LoginAdapter extends RecyclerView.Adapter<LoginAdapter.ViewHolder> 
     List<User> users;
     LoginInterface listener;
 
+    //Login adapter will include the object of context of the class, List of class User, and LoginInterface.
     public LoginAdapter(Context context, List<User> users, LoginInterface listener) {
-        this.context = context;
-        this.users = users;
-        this.listener = listener;
+        this.context = context;//initializing context
+        this.users = users;//initializing users
+        this.listener = listener;//initializing listener
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.login_users_item, parent, false));
     }
 

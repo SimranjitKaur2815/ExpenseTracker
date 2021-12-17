@@ -29,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText firstNameEt, lastNameEt, dobEt, passwordEt;
     MaterialButton submit;
     Date dob;
+    boolean validUser=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,27 +70,50 @@ public class SignUpActivity extends AppCompatActivity {
 
         });
         submit.setOnClickListener(v -> {
+            validUser=true;
+            if(firstNameEt.getText().toString().equals(""))
+            {
+                firstNameEt.setError("Field Required");
+                validUser=false;
+            }
+            if(lastNameEt.getText().toString().equals(""))
+            {
+                lastNameEt.setError("Field Required");
+                validUser=false;
+            }
+            if(dobEt.getText().toString().equals(""))
+            {
+                dobEt.setError("Field Required");
+                validUser=false;
+            }
+            if(passwordEt.getText().toString().equals(""))
+            {
+                passwordEt.setError("Field Required");
+                validUser=false;
+            }
+            if(validUser) {
+                try {
 
-            try {
-                User user = new User("testAvatar",
-                        firstNameEt.getText().toString(),
-                        lastNameEt.getText().toString(),
-                        AESCrypt.encrypt(passwordEt.getText().toString(), passwordEt.getText().toString()), dob);
-                DbHelper.getInstance().registerUser(this, user, new UserDbListener.onAuthListener() {
-                    @Override
-                    public void onSuccess() {
-                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                        finish();
-                    }
+                    User user = new User(
+                            firstNameEt.getText().toString(),
+                            lastNameEt.getText().toString(),
+                            AESCrypt.encrypt(passwordEt.getText().toString(), passwordEt.getText().toString()), dob);
+                    DbHelper.getInstance().registerUser(this, user, new UserDbListener.onAuthListener() {
+                        @Override
+                        public void onSuccess() {
+                            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                            finish();
+                        }
 
-                    @Override
-                    public void onFailure(String msg) {
-                        Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } catch (GeneralSecurityException e) {
-                e.printStackTrace();
-                Toast.makeText(SignUpActivity.this, "Exception : " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(String msg) {
+                            Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                    Toast.makeText(SignUpActivity.this, "Exception : " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

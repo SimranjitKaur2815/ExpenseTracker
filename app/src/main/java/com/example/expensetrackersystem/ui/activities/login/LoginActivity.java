@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     ImageView passBackBtn, backBtn;
     RecyclerView usersRecyc;
     Button submit, addUserBtn;
+
     User user;
     boolean isFromProfile = false;
 
@@ -129,35 +131,45 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onUserDelete(User user) {
-
+                        //getting instance of DBHelper class which will help application to delete the user from it
                         DbHelper.getInstance().deleteUser(LoginActivity.this, user, new UserDbListener.onDeleteAccountListener() {
                             @Override
                             public void onSuccess() {
+                                //getting registered users
                                 getRegisteredUsers();
                             }
 
                             @Override
                             public void onFailure(String msg) {
+                                //if there is any error getting user from DBHelper,
+                                // the toast will display the error message
                                 Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onPasswordRequired(UserDbListener.onPasswordRequiredListener listener) {
+                                //initializing alertdialog.builder when there is password required on the activity
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-
+                                //inflating the layout to the view
                                 View diaView = LayoutInflater.from(LoginActivity.this).inflate(R.layout.password_req_dia_lay, null, false);
+                                //setting the layout to builder
                                 builder.setView(diaView);
+                                //creating builder
                                 AlertDialog dialog = builder.create();
+                                //initializing the elements in the dialog box
                                 Button deleteBtn = diaView.findViewById(R.id.deleteBtn);
                                 TextView authenticationMessage=diaView.findViewById(R.id.authenticationMessage);
                                 TextInputEditText pass = diaView.findViewById(R.id.diaPassET);
+                                //setting text to the textview
                                 authenticationMessage.setText("As this is not your account, so password will be required.");
 
                                 deleteBtn.setOnClickListener(v -> {
+                                    //if password field is empty while submitting then user will get an error
                                     if (TextUtils.isEmpty(pass.getText().toString())) {
                                         pass.setError("Password required");
                                         return;
                                     }
+                                    //getting instance of DBHelper class to get the password authentication
                                     DbHelper.getInstance().authenticatePassword(LoginActivity.this, user, pass.getText().toString(), new UserDbListener.onAuthListener() {
                                         @Override
                                         public void onSuccess() {

@@ -12,10 +12,7 @@
         android:title="All Expenses"
         android:icon="@drawable/ic_expenses"
         />
-        <item
-            android:id="@+id/nav_starred"
-            android:title="Starred"
-            android:icon="@drawable/ic_starred"/>
+
 
     <item
         android:id="@+id/nav_about"

@@ -15,8 +15,7 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name = "avatar")
-    private String avatar;
+
 
     @ColumnInfo(name = "first_name")
     private String firstName;
@@ -35,8 +34,8 @@ public class User {
     @TypeConverters({DateTypeConverter.class})
     private Date userCreatedTimeStamp = Calendar.getInstance().getTime();
 
-    public User(String avatar, String firstName, String lastName, String password, Date dob) {
-        this.avatar = avatar;
+    public User( String firstName, String lastName, String password, Date dob) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -91,19 +90,12 @@ public class User {
         this.password = password;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", avatar='" + avatar + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
