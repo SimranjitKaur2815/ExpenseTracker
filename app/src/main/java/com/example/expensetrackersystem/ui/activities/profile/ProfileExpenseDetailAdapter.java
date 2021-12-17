@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.expensetrackersystem.R;
 import com.example.expensetrackersystem.models.ProfileExpensesDetailModel;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ProfileExpenseDetailAdapter extends RecyclerView.Adapter<ProfileExpenseDetailAdapter.ViewHolder> {
@@ -34,12 +35,12 @@ public class ProfileExpenseDetailAdapter extends RecyclerView.Adapter<ProfileExp
         ProfileExpensesDetailModel model = modelList.get(position);
         if (model.getDetailCode().equals("TEA")) {
 
-            holder.detailAmount.setText("$"+model.getDetailAmount());
+            holder.detailAmount.setText("$"+ model.getDetailAmount());
         } else {
 
             holder.detailAmount.setText(model.getDetailAmount());
         }
-       double amount=Double.parseDouble(model.getDetailAmount());
+       double amount=Double.parseDouble((model.getDetailAmount()));
         if(amount>0 && amount<=99){
             holder.detailAmount.setTextSize(18);
         }
@@ -48,11 +49,11 @@ public class ProfileExpenseDetailAdapter extends RecyclerView.Adapter<ProfileExp
         }
         else if(amount>=1000 && amount<=9999)
         {
-            holder.detailAmount.setTextSize(14);
+            holder.detailAmount.setTextSize(12);
         }
         else if(amount>=10000 && amount<=99999)
         {
-            holder.detailAmount.setTextSize(12);
+            holder.detailAmount.setTextSize(10);
         }
         else if(amount>=100000 && amount<=999999){
             holder.detailAmount.setTextSize(10);

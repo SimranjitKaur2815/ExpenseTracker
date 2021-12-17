@@ -31,7 +31,7 @@ public class ProfileExpensesDetailModel {
     }
 
     public String getDetailAmount() {
-        return detailAmount;
+        return String.format("%.2f",Double.parseDouble(detailAmount));
     }
 
     public void setDetailAmount(String detailAmount) {

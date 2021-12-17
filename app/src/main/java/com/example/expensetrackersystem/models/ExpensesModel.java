@@ -12,7 +12,7 @@ public class ExpensesModel {
 
     /* getter and setter for total price starts here*/
     public Double getTotalPrice() {
-        return totalPrice;
+        return Double.parseDouble(String.format("%.2f",totalPrice));
     }
 
     public void setTotalPrice(Double totalPrice) {
