@@ -13,7 +13,7 @@ import com.example.expensetrackersystem.utils.db.UserDbListener;
 
 
 public class SplashScreen extends AppCompatActivity {
-    private final int SPLASH_DISPLAY_LENGTH = 2000;
+    private final int SPLASH_DISPLAY_LENGTH = 2500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
