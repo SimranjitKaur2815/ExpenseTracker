@@ -64,12 +64,10 @@ public class LoginActivity extends AppCompatActivity {
         if (isFromProfile)
         {
             backBtn.setVisibility(View.VISIBLE);
-            addUserBtn.setVisibility(View.VISIBLE);
         }
         else
         {
             backBtn.setVisibility(View.GONE);
-            addUserBtn.setVisibility(View.GONE);
         }
         usersLay = findViewById(R.id.usersLay);
         password = findViewById(R.id.password);
