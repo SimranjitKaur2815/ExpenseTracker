@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+//Singleton Databaseclient class
 public class DatabaseClient {
     private Context mCtx;
     private static DatabaseClient mInstance;
@@ -13,7 +14,7 @@ public class DatabaseClient {
 
     private DatabaseClient(Context mCtx) {
         this.mCtx = mCtx;
-
+        //Building Room database
         appDatabase = Room.databaseBuilder(mCtx, AppDatabase.class, "ExpenseTracker").build();
     }
 
@@ -23,7 +24,7 @@ public class DatabaseClient {
         }
         return mInstance;
     }
-
+    //To get access to the created data access objects
     public AppDatabase getAppDatabase() {
         return appDatabase;
     }

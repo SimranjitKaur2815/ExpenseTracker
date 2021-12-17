@@ -13,7 +13,7 @@ import com.example.expensetrackersystem.database.entities.ExpenseItemsWithUser;
 
 @Database(entities = {User.class, ExpenseItems.class, ExpenseItemsWithUser.class, CurrentUser.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract UserDao userDao();
-    public abstract ExpensesDao expensesDao();
-    public abstract CurrentUserDao currentUserDao();
+    public abstract UserDao userDao();//Get user data access object
+    public abstract ExpensesDao expensesDao();//Get expenses data access object
+    public abstract CurrentUserDao currentUserDao();//Get current user data access object
 }

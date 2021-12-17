@@ -26,26 +26,37 @@ public class DbHelper {
     private DbHelper() {
     }
 
+    //To provide singleton DbHelper class instance
     public static synchronized DbHelper getInstance() {
         if (instance == null) {
             instance = new DbHelper();
         }
         return instance;
     }
+    
     /*----- PRIVATE FUNCTIONS-------*/
 
+    //Get current logged in user
     private void CURRENT_USER(Context context, UserDbListener.onGetCurrentUserListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
+            //Getting currently logged in user's user_id
             int userId = DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().getCurrentUser();
             if (userId > 0) {
+                //Getting user's detail if any user is logged in.
                 User user = DatabaseClient.getInstance(context).getAppDatabase().userDao().getUserById(userId);
                 if (user != null) {
+                    //Running on UI thread as UI element cannot run on background thread.
+                    //Callback onSuccess if user is available.
                     ((Activity) context).runOnUiThread(() -> listener.onSuccess(user));
                 } else {
+                    //Deleting current user if user id not registered.
                     DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().deleteCurrentUser();
                     ((Activity) context).runOnUiThread(() -> listener.onFailure("No current user"));
                 }
             } else {
+                //Running on UI thread as UI element cannot run on background thread.
+                //Returning error msg if no user is currently logged in.
                 ((Activity) context).runOnUiThread(() -> listener.onFailure("No current user"));
             }
         });
@@ -55,27 +66,38 @@ public class DbHelper {
 
     /* --------- USER -----------*/
 
+    //Authenticate password method to check whether the entered password is correct or not
     public void authenticatePassword(Context context, User user, String password, UserDbListener.onAuthListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
             try {
+                //Encrypting password
                 String encPassword = AESCrypt.encrypt(password, password);
                 if (user.getPassword().equals(encPassword)) {
+                    //Running on UI thread as UI element cannot run on background thread.
+                    //Callback onSuccess if user entered right password.
                     ((Activity) context).runOnUiThread(listener::onSuccess);
                 } else {
+                    //Returning error msg if user entered wrong password.
                     ((Activity) context).runOnUiThread(() -> listener.onFailure("Invalid Password"));
                 }
 
             } catch (GeneralSecurityException e) {
+                //Running on UI thread as UI element cannot run on background thread.
+                //Returning error msg if any error occurs while encrypting.
                 ((Activity) context).runOnUiThread(() -> listener.onFailure(e.getLocalizedMessage()));
-
             }
         });
     }
 
+    //Method to perform the registration task for a new user
     public void registerUser(Context context, User user, UserDbListener.onAuthListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
             User getUser = DatabaseClient.getInstance(context).getAppDatabase().userDao().getUserByName(user.getFirstName(), user.getLastName());
+            //Checking whether this name is already registered or not.
             if (getUser == null) {
+                //Registering user in the database by inserting user's detail
                 DatabaseClient.getInstance(context).getAppDatabase().userDao().insertUser(user);
                 ((Activity) context).runOnUiThread(listener::onSuccess);
             } else {
@@ -85,6 +107,7 @@ public class DbHelper {
     }
 
     public void loginUser(Context context, int userId, String password, UserDbListener.onAuthListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
             try {
                 String encPassword = AESCrypt.encrypt(password, password);
@@ -116,6 +139,7 @@ public class DbHelper {
     }
 
     public void logoutUser(boolean callingFromHelper, Context context, UserDbListener.onAuthListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
             try {
                 DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().deleteCurrentUser();
@@ -134,6 +158,7 @@ public class DbHelper {
     }
 
     public void getAllUsers(Context context, UserDbListener.onGetUsersListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
             List<User> users = DatabaseClient.getInstance(context).getAppDatabase().userDao().getAllUsers();
             ((Activity) context).runOnUiThread(() -> {
@@ -147,6 +172,7 @@ public class DbHelper {
     }
 
     public void isLoggedIn(Context context, UserDbListener.onAuthListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
             int userId = DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().getCurrentUser();
             if (userId > 0) {
@@ -164,6 +190,7 @@ public class DbHelper {
     }
 
     public void getCurrentUser(Context context, UserDbListener.onGetCurrentUserListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
             int userId = DatabaseClient.getInstance(context).getAppDatabase().currentUserDao().getCurrentUser();
             if (userId > 0) {
@@ -199,6 +226,7 @@ public class DbHelper {
                     });
                 } else {
                     listener.onPasswordRequired(() -> {
+                        //Executor is used to run the database queries in background.
                         executor.execute(() -> {
                             DatabaseClient.getInstance(context).getAppDatabase().userDao().deleteUser(deleteUser);
                         });
@@ -215,24 +243,22 @@ public class DbHelper {
 
     }
 
-    public void updateUsername(Context context, String newFirstname,String newLastname, String password, UserDbListener.onAuthListener listener) {
+    public void updateUsername(Context context, String newFirstname, String newLastname, String password, UserDbListener.onAuthListener listener) {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
                 try {
-                    String encryptPassword=AESCrypt.encrypt(password,password);
-                    if(user.getPassword().equals(encryptPassword)){
+                    String encryptPassword = AESCrypt.encrypt(password, password);
+                    if (user.getPassword().equals(encryptPassword)) {
                         //Proceed updating username
                         user.setFirstName(newFirstname);
                         user.setLastName(newLastname);
-                        executor.execute(()->{
+                        executor.execute(() -> {
                             DatabaseClient.getInstance(context).getAppDatabase().userDao().updateUser(user);
                         });
                         listener.onSuccess();
 
-                    }
-                    else
-                    {
+                    } else {
                         listener.onFailure("Invalid password");
                     }
                 } catch (GeneralSecurityException e) {
@@ -249,25 +275,24 @@ public class DbHelper {
         });
     }
 
-    public void updatePassword(Context context, String oldPassword, String newPassword, UserDbListener.onAuthListener listener){
+    public void updatePassword(Context context, String oldPassword, String newPassword, UserDbListener.onAuthListener listener) {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
                 try {
-                    String encryptPassword=AESCrypt.encrypt(oldPassword,oldPassword);
-                    String encryptNewPassword=AESCrypt.encrypt(newPassword,newPassword);
+                    String encryptPassword = AESCrypt.encrypt(oldPassword, oldPassword);
+                    String encryptNewPassword = AESCrypt.encrypt(newPassword, newPassword);
 
-                    if(user.getPassword().equals(encryptPassword)){
+                    if (user.getPassword().equals(encryptPassword)) {
                         //Proceed updating username
                         user.setPassword(encryptNewPassword);
-                        executor.execute(()->{
+                        //Executor is used to run the database queries in background.
+                        executor.execute(() -> {
                             DatabaseClient.getInstance(context).getAppDatabase().userDao().updateUser(user);
                         });
                         listener.onSuccess();
 
-                    }
-                    else
-                    {
+                    } else {
                         listener.onFailure("Invalid old password");
                     }
                 } catch (GeneralSecurityException e) {
@@ -292,6 +317,7 @@ public class DbHelper {
     /* --------- EXPENSES -----------*/
 
     public void getExpenses(Context context, int userId, String expenseDate, ExpenseDbListener.onGetExpensesListener listener) {
+        //Executor is used to run the database queries in background.
         executor.execute(() -> {
             List<ExpenseItems> items = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpenses(userId, expenseDate);
             for (ExpenseItems item : items) {
@@ -310,6 +336,7 @@ public class DbHelper {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
+                //Executor is used to run the database queries in background.
                 executor.execute(() -> {
                     DatabaseClient.getInstance(context).getAppDatabase().expensesDao().insertExpense(expenseItems);
                     ((Activity) context).runOnUiThread(listener::onSuccess);
@@ -327,8 +354,8 @@ public class DbHelper {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
+                //Executor is used to run the database queries in background.
                 executor.execute(() -> {
-                    Log.e(TAG, "UpdateExpense: " + expenseItem.toString());
                     DatabaseClient.getInstance(context).getAppDatabase().expensesDao()
                             .updateExpense(expenseItem);
                     ((Activity) context).runOnUiThread(listener::onSuccess);
@@ -346,6 +373,7 @@ public class DbHelper {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
+                //Executor is used to run the database queries in background.
                 executor.execute(() -> {
                     DatabaseClient.getInstance(context).getAppDatabase().expensesDao().delete(expenseItem);
                     ((Activity) context).runOnUiThread(listener::onSuccess);
@@ -363,6 +391,7 @@ public class DbHelper {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
+                //Executor is used to run the database queries in background.
                 executor.execute(() -> {
                     List<String> dates = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpensesDates();
                     if (dates.size() > 0) {
@@ -370,14 +399,16 @@ public class DbHelper {
                         for (String date : dates) {
                             ExpensesModel expensesModel = new ExpensesModel();
                             List<ExpenseItems> expenseItems = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpenses(user.getId(), date);
-                            Double totPrice = 0.0d;
-                            for (ExpenseItems item : expenseItems) {
-                                totPrice += item.getItemPrice();
+                            if (expenseItems.size() > 0) {
+                                Double totPrice = 0.0d;
+                                for (ExpenseItems item : expenseItems) {
+                                    totPrice += item.getItemPrice();
+                                }
+                                expensesModel.setTotalPrice(totPrice);
+                                expensesModel.setSubmittedDate(date);
+                                expensesModel.setExpenseItems(expenseItems);
+                                expensesModelList.add(expensesModel);
                             }
-                            expensesModel.setTotalPrice(totPrice);
-                            expensesModel.setSubmittedDate(date);
-                            expensesModel.setExpenseItems(expenseItems);
-                            expensesModelList.add(expensesModel);
 
                         }
                         listener.onSuccess(expensesModelList);
@@ -398,6 +429,7 @@ public class DbHelper {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
+                //Executor is used to run the database queries in background.
                 executor.execute(() -> {
                     DatabaseClient.getInstance(context).getAppDatabase().expensesDao().deleteByDate(createdDate);
                     ((Activity) context).runOnUiThread(listener::onSuccess);
@@ -415,6 +447,7 @@ public class DbHelper {
         CURRENT_USER(context, new UserDbListener.onGetCurrentUserListener() {
             @Override
             public void onSuccess(User user) {
+                //Executor is used to run the database queries in background.
                 executor.execute(() -> {
                     ExpenseDetailModel expenseDetailModel = DatabaseClient.getInstance(context).getAppDatabase().expensesDao().getExpensesDetails(user.getId());
                     ((Activity) context).runOnUiThread(() -> listener.onSuccess(expenseDetailModel));

@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
     MaterialButton addExpenseMatBtn, updateExpenseMatBtn, cancelExpenseButton, cancelButton;
     BottomSheetDialog bottomSheetDialog;
     Executor executor;
-    TextView expenseDayTV, expenseDateTV;
+    TextView expenseDayTV, expenseDateTV,changeDate;
     RecyclerView expenseRecyc;
     User user;
     ExpenseItems updatedExpenseItem;
@@ -92,6 +92,7 @@ public class HomeFragment extends Fragment {
     private void initElements() {
         addExpenseBtn = view.findViewById(R.id.addExpense);
         expenseDayTV = view.findViewById(R.id.expenseDay);
+        changeDate = view.findViewById(R.id.changeDate);
         expenseDateTV = view.findViewById(R.id.expenseDate);
         expenseRecyc = view.findViewById(R.id.expensesRecyc);
         expenseRecyc.setLayoutManager(new LinearLayoutManager(context));
@@ -161,7 +162,7 @@ public class HomeFragment extends Fragment {
             }
             UpdateExpense();
         });
-        expenseDateTV.setOnClickListener(v -> changeDate());
+        changeDate.setOnClickListener(v -> changeDate());
     }
 
 
